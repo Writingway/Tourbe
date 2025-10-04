@@ -1,8 +1,10 @@
 import { FC } from 'react';
+import { motion } from 'framer-motion';
 import { useQuizStore } from '../../store/useQuizStore';
-import { Progress } from './Progress';
+import { LiquidProgress } from './LiquidProgress';
 import { Question } from './Question';
-import { Badge } from '../UI/Badge';
+import { ParticleBackground } from '../3D/ParticleBackground';
+import { PageTransition } from '../Animations/PageTransition';
 import { matchWhiskies } from '../../lib/matching';
 import whiskiesData from '../../data/whiskies.json';
 import type {
@@ -118,9 +120,14 @@ export const QuizShell: FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 to-orange-100 px-4 py-12">
-      <div className="max-w-4xl mx-auto">
-        <Progress currentStep={currentStep + 1} totalSteps={TOTAL_STEPS} />
+    <PageTransition>
+      <div className="relative min-h-screen px-4 py-12">
+        <ParticleBackground />
+
+        <div className="relative z-10 max-w-5xl mx-auto">
+          <div className="mb-12">
+            <LiquidProgress currentStep={currentStep + 1} totalSteps={TOTAL_STEPS} />
+          </div>
 
         {currentStep === 0 && (
           <Question
@@ -129,26 +136,33 @@ export const QuizShell: FC = () => {
             onNext={handleNext}
             canProceed={answers.styleTags.length > 0}
           >
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-              {STYLE_TAGS.map((tag) => (
-                <button
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              {STYLE_TAGS.map((tag, idx) => (
+                <motion.button
                   key={tag}
                   onClick={() => toggleMultiSelect('styleTags', tag)}
-                  className={`p-4 rounded-lg border-2 transition-all ${
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.05 }}
+                  whileHover={{
+                    scale: 1.05,
+                    rotateY: 5,
+                    rotateX: -5,
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                  className={`p-6 rounded-xl transition-all ${
                     answers.styleTags.includes(tag)
-                      ? 'border-whisky-600 bg-whisky-50'
-                      : 'border-gray-300 bg-white hover:border-whisky-400'
+                      ? 'glass-effect border-2 border-copper-500 bg-copper-500/20'
+                      : 'glass-effect border-2 border-dark-700 hover:border-copper-500/50'
                   }`}
+                  style={{ transformStyle: 'preserve-3d' }}
                 >
-                  <Badge
-                    variant={
-                      answers.styleTags.includes(tag) ? 'success' : 'default'
-                    }
-                    className="text-sm"
-                  >
+                  <span className={`text-sm font-medium ${
+                    answers.styleTags.includes(tag) ? 'text-copper-300' : 'text-copper-100'
+                  }`}>
                     {formatLabel(tag)}
-                  </Badge>
-                </button>
+                  </span>
+                </motion.button>
               ))}
             </div>
           </Question>
@@ -391,7 +405,8 @@ export const QuizShell: FC = () => {
             </div>
           </Question>
         )}
+        </div>
       </div>
-    </div>
+    </PageTransition>
   );
 };

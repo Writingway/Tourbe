@@ -1,14 +1,98 @@
 @import "tailwindcss";
 
 @theme {
-  --color-whisky-50: #faf8f3;
-  --color-whisky-100: #f4f0e6;
-  --color-whisky-200: #e8ddc4;
-  --color-whisky-300: #d9c59d;
-  --color-whisky-400: #c8a76e;
-  --color-whisky-500: #b8894c;
-  --color-whisky-600: #a57040;
-  --color-whisky-700: #895836;
-  --color-whisky-800: #704831;
-  --color-whisky-900: #5c3d2b;
+  /* Dark Premium Base Colors */
+  --color-dark-950: #0a0a0a;
+  --color-dark-900: #121212;
+  --color-dark-850: #1a1a1a;
+  --color-dark-800: #1e1e1e;
+  --color-dark-700: #2a2a2a;
+
+  /* Copper/Gold Accent Colors */
+  --color-copper-50: #fef6ee;
+  --color-copper-100: #fde8d5;
+  --color-copper-200: #fbcdaa;
+  --color-copper-300: #f8ab74;
+  --color-copper-400: #f4803c;
+  --color-copper-500: #d4622a;
+  --color-copper-600: #b54a1e;
+  --color-copper-700: #93391b;
+  --color-copper-800: #7a301c;
+  --color-copper-900: #642a19;
+
+  /* Whisky Amber Colors */
+  --color-whisky-50: #fef9ec;
+  --color-whisky-100: #fbeec9;
+  --color-whisky-200: #f7da8e;
+  --color-whisky-300: #f3c053;
+  --color-whisky-400: #efa52b;
+  --color-whisky-500: #e9821c;
+  --color-whisky-600: #cd6016;
+  --color-whisky-700: #aa4315;
+  --color-whisky-800: #8a3419;
+  --color-whisky-900: #712c18;
+
+  /* Premium Glass Effect */
+  --color-glass-light: rgba(255, 255, 255, 0.05);
+  --color-glass-medium: rgba(255, 255, 255, 0.1);
+  --color-glass-dark: rgba(0, 0, 0, 0.4);
+
+  /* Typography */
+  --font-family-serif: 'Playfair Display', Georgia, serif;
+  --font-family-sans: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* Custom Animations */
+@keyframes shimmer {
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
+}
+
+@keyframes liquid-fill {
+  0% { height: 0%; }
+  100% { height: 100%; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes glow {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+@keyframes ripple {
+  0% { transform: scale(0); opacity: 1; }
+  100% { transform: scale(4); opacity: 0; }
+}
+
+/* Custom Utilities */
+.glass-effect {
+  background: var(--color-glass-medium);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--color-glass-light);
+}
+
+.copper-gradient {
+  background: linear-gradient(135deg, var(--color-copper-600) 0%, var(--color-whisky-500) 100%);
+}
+
+.shimmer-effect {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--color-glass-light) 50%,
+    transparent 100%
+  );
+  background-size: 2000px 100%;
+  animation: shimmer 3s infinite;
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, var(--color-copper-300) 0%, var(--color-whisky-400) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
