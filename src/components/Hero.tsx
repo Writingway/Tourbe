@@ -28,6 +28,13 @@ export const Hero: FC = () => {
               Find my whisky
             </Button>
             <Button
+              variant="secondary"
+              size="lg"
+              onClick={() => (window.location.href = '/browse')}
+            >
+              Browse All Whiskies
+            </Button>
+            <Button
               variant="outline"
               size="lg"
               onClick={() => setIsModalOpen(true)}

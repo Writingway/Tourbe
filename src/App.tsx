@@ -5,6 +5,7 @@ import { Results } from './pages/Results';
 import { Map } from './pages/Map';
 import { QR } from './pages/QR';
 import { Insights } from './pages/Insights';
+import { Browse } from './pages/Browse';
 import whiskiesData from './data/whiskies.json';
 import { WhiskyDataSchema } from './lib/scoring.types';
 import { ZodError } from 'zod';
@@ -109,6 +110,8 @@ const Router: FC = () => {
   switch (path) {
     case '/':
       return <Home />;
+    case '/browse':
+      return <Browse />;
     case '/quiz':
       return <Quiz />;
     case '/results':
