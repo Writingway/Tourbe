@@ -94,7 +94,7 @@
       "length": "LONG",
       "notes": [
         "SMOKE",
-        "FRUITY",
+        "SWEET",
         "SPICE"
       ]
     },
@@ -118,8 +118,7 @@
       "SMOKY",
       "FRUITY",
       "FLORAL",
-      "BOURBON_CASK",
-      "MEDIUM"
+      "BOURBON_CASK"
     ],
     "intensity": "MEDIUM",
     "mouthfeel": [
@@ -152,9 +151,7 @@
       "PEATY",
       "SMOKY",
       "FRUITY",
-      "OILY",
-      "BOURBON_CASK",
-      "MEDIUM"
+      "BOURBON_CASK"
     ],
     "intensity": "MEDIUM",
     "mouthfeel": [
@@ -191,7 +188,7 @@
       "BOURBON_CASK",
       "LIGHT_BODY"
     ],
-    "intensity": "VANILLA",
+    "intensity": "MEDIUM",
     "mouthfeel": [
       "SOFT",
       "DRY"
@@ -293,9 +290,7 @@
       "NUTTY",
       "FRUITY",
       "SHERRY",
-      "MALTY",
-      "SOFT",
-      "MEDIUM"
+      "MALTY"
     ],
     "intensity": "MEDIUM",
     "mouthfeel": [
@@ -306,7 +301,7 @@
       "length": "MEDIUM",
       "notes": [
         "SWEET",
-        "FRUITY",
+        "SWEET",
         "SPICE"
       ]
     },
@@ -333,7 +328,7 @@
       "BOURBON_CASK",
       "LIGHT_BODY"
     ],
-    "intensity": "VANILLA",
+    "intensity": "MEDIUM",
     "mouthfeel": [
       "SOFT"
     ],
@@ -366,7 +361,7 @@
       "BOURBON_CASK",
       "LIGHT_BODY"
     ],
-    "intensity": "VANILLA",
+    "intensity": "MEDIUM",
     "mouthfeel": [
       "SOFT"
     ],
@@ -408,7 +403,7 @@
       "length": "MEDIUM",
       "notes": [
         "SWEET",
-        "FRUITY",
+        "SWEET",
         "SPICE"
       ]
     },
@@ -444,7 +439,7 @@
       "length": "LONG",
       "notes": [
         "SWEET",
-        "FRUITY",
+        "SWEET",
         "SPICE"
       ]
     },
@@ -468,8 +463,7 @@
       "FRUITY",
       "SWEET",
       "SPICY",
-      "NUTTY",
-      "MEDIUM"
+      "NUTTY"
     ],
     "intensity": "MEDIUM",
     "mouthfeel": [
@@ -480,7 +474,7 @@
       "length": "MEDIUM",
       "notes": [
         "SWEET",
-        "FRUITY",
+        "SWEET",
         "SPICE"
       ]
     },
@@ -516,7 +510,7 @@
       "length": "LONG",
       "notes": [
         "SWEET",
-        "FRUITY",
+        "SWEET",
         "SPICE"
       ]
     },
@@ -540,8 +534,7 @@
       "SWEET",
       "VANILLA",
       "SHERRY",
-      "NUTTY",
-      "MEDIUM"
+      "NUTTY"
     ],
     "intensity": "MEDIUM",
     "mouthfeel": [
@@ -552,7 +545,7 @@
       "length": "MEDIUM",
       "notes": [
         "SWEET",
-        "FRUITY"
+        "SWEET"
       ]
     },
     "experimental": false,
@@ -575,8 +568,7 @@
       "SWEET",
       "VANILLA",
       "WINE_CASK",
-      "FRUITY",
-      "MEDIUM"
+      "FRUITY"
     ],
     "intensity": "MEDIUM",
     "mouthfeel": [
@@ -622,7 +614,7 @@
       "length": "LONG",
       "notes": [
         "SWEET",
-        "FRUITY",
+        "SWEET",
         "SPICE"
       ]
     },
@@ -658,7 +650,7 @@
       "length": "LONG",
       "notes": [
         "SWEET",
-        "FRUITY",
+        "SWEET",
         "SPICE"
       ]
     },
@@ -694,7 +686,7 @@
       "length": "LONG",
       "notes": [
         "SWEET",
-        "FRUITY",
+        "SWEET",
         "SPICE"
       ]
     },
@@ -718,8 +710,7 @@
       "SMOKY",
       "SWEET",
       "VANILLA",
-      "SHERRY",
-      "MEDIUM"
+      "SHERRY"
     ],
     "intensity": "MEDIUM",
     "mouthfeel": [
@@ -754,7 +745,6 @@
       "SMOKY",
       "SWEET",
       "MALTY",
-      "MEDIUM",
       "SMOKY"
     ],
     "intensity": "MEDIUM",
@@ -790,8 +780,7 @@
       "FRUITY",
       "SWEET",
       "SHERRY",
-      "FLORAL",
-      "MEDIUM"
+      "FLORAL"
     ],
     "intensity": "MEDIUM",
     "mouthfeel": [
@@ -839,7 +828,7 @@
       "notes": [
         "SMOKE",
         "SWEET",
-        "FRUITY",
+        "SWEET",
         "SPICE"
       ]
     },
@@ -982,7 +971,7 @@
       "length": "LONG",
       "notes": [
         "SMOKE",
-        "FRUITY",
+        "SWEET",
         "SPICE"
       ]
     },
@@ -1009,7 +998,7 @@
       "BOURBON_CASK",
       "LIGHT_BODY"
     ],
-    "intensity": "VANILLA",
+    "intensity": "MEDIUM",
     "mouthfeel": [
       "SOFT"
     ],
@@ -1039,8 +1028,7 @@
       "SWEET",
       "WINE_CASK",
       "VANILLA",
-      "SWEET",
-      "MEDIUM"
+      "SWEET"
     ],
     "intensity": "MEDIUM",
     "mouthfeel": [
@@ -1086,7 +1074,7 @@
       "length": "MEDIUM",
       "notes": [
         "SWEET",
-        "FRUITY",
+        "SWEET",
         "SPICE"
       ]
     },
@@ -1110,8 +1098,7 @@
       "FRUITY",
       "SWEET",
       "WINE_CASK",
-      "NUTTY",
-      "MEDIUM"
+      "NUTTY"
     ],
     "intensity": "MEDIUM",
     "mouthfeel": [
@@ -1122,12 +1109,12 @@
       "length": "MEDIUM",
       "notes": [
         "SWEET",
-        "FRUITY",
+        "SWEET",
         "SPICE"
       ]
     },
     "experimental": true,
-    "tastingNoteShort": "Triple wood matured: bourbon, oloroso, and pedro ximénez casks",
+    "tastingNoteShort": "Triple wood matured: bourbon, oloroso, and pedro xim\u00e9nez casks",
     "image": "/images/placeholder.jpg",
     "distilleryLocation": {
       "lat": 55.9203,
@@ -1149,7 +1136,7 @@
       "LIGHT_BODY",
       "FLORAL"
     ],
-    "intensity": "VANILLA",
+    "intensity": "MEDIUM",
     "mouthfeel": [
       "SOFT",
       "DRY"
@@ -1192,7 +1179,7 @@
       "length": "LONG",
       "notes": [
         "SWEET",
-        "FRUITY",
+        "SWEET",
         "SPICE"
       ]
     },
@@ -1228,7 +1215,7 @@
       "length": "LONG",
       "notes": [
         "SWEET",
-        "FRUITY",
+        "SWEET",
         "SPICE"
       ]
     },
@@ -1264,7 +1251,7 @@
       "length": "LONG",
       "notes": [
         "SWEET",
-        "FRUITY",
+        "SWEET",
         "SPICE"
       ]
     },
@@ -1291,7 +1278,7 @@
       "LIGHT_BODY",
       "LIGHT_BODY"
     ],
-    "intensity": "VANILLA",
+    "intensity": "MEDIUM",
     "mouthfeel": [
       "SOFT"
     ],
@@ -1321,8 +1308,7 @@
       "SPICY",
       "SWEET",
       "MALTY",
-      "WINE_CASK",
-      "MEDIUM"
+      "WINE_CASK"
     ],
     "intensity": "MEDIUM",
     "mouthfeel": [
@@ -1359,7 +1345,7 @@
       "LIGHT_BODY",
       "LIGHT_BODY"
     ],
-    "intensity": "VANILLA",
+    "intensity": "MEDIUM",
     "mouthfeel": [
       "SOFT"
     ],
@@ -1392,7 +1378,7 @@
       "LIGHT_BODY",
       "LIGHT_BODY"
     ],
-    "intensity": "VANILLA",
+    "intensity": "MEDIUM",
     "mouthfeel": [
       "SOFT"
     ],
@@ -1422,8 +1408,7 @@
       "SHERRY",
       "SWEET",
       "VANILLA",
-      "MALTY",
-      "MEDIUM"
+      "MALTY"
     ],
     "intensity": "MEDIUM",
     "mouthfeel": [
@@ -1434,7 +1419,7 @@
       "length": "LONG",
       "notes": [
         "SWEET",
-        "FRUITY",
+        "SWEET",
         "SPICE"
       ]
     },
@@ -1461,7 +1446,7 @@
       "FLORAL",
       "LIGHT_BODY"
     ],
-    "intensity": "VANILLA",
+    "intensity": "MEDIUM",
     "mouthfeel": [
       "SOFT",
       "DRY"
@@ -1493,10 +1478,9 @@
       "FLORAL",
       "SWEET",
       "VANILLA",
-      "SHERRY",
-      "MEDIUM"
+      "SHERRY"
     ],
-    "intensity": "VANILLA",
+    "intensity": "MEDIUM",
     "mouthfeel": [
       "SOFT"
     ],
@@ -1599,7 +1583,7 @@
       "SHERRY",
       "LIGHT_BODY"
     ],
-    "intensity": "VANILLA",
+    "intensity": "MEDIUM",
     "mouthfeel": [
       "SOFT"
     ],
@@ -1607,7 +1591,7 @@
       "length": "MEDIUM",
       "notes": [
         "SWEET",
-        "FRUITY"
+        "SWEET"
       ]
     },
     "experimental": false,
@@ -1630,8 +1614,7 @@
       "VANILLA",
       "BOURBON_CASK",
       "FRUITY",
-      "SPICY",
-      "MEDIUM"
+      "SPICY"
     ],
     "intensity": "MEDIUM",
     "mouthfeel": [
@@ -1734,8 +1717,7 @@
       "FRUITY",
       "SPICY",
       "VANILLA",
-      "FLORAL",
-      "MEDIUM"
+      "FLORAL"
     ],
     "intensity": "MEDIUM",
     "mouthfeel": [
@@ -1804,10 +1786,9 @@
       "VANILLA",
       "BOURBON_CASK",
       "FRUITY",
-      "SOFT",
       "LIGHT_BODY"
     ],
-    "intensity": "VANILLA",
+    "intensity": "MEDIUM",
     "mouthfeel": [
       "SOFT"
     ],
@@ -1837,8 +1818,7 @@
       "VANILLA",
       "BOURBON_CASK",
       "FRUITY",
-      "SPICY",
-      "MEDIUM"
+      "SPICY"
     ],
     "intensity": "MEDIUM",
     "mouthfeel": [
@@ -1942,8 +1922,7 @@
       "SWEET",
       "VANILLA",
       "BOURBON_CASK",
-      "FRUITY",
-      "MEDIUM"
+      "FRUITY"
     ],
     "intensity": "MEDIUM",
     "mouthfeel": [
@@ -2083,7 +2062,7 @@
       "SMOKY",
       "FRUITY",
       "SWEET",
-      "HONEY",
+      "MALTY",
       "FULL_BODY"
     ],
     "intensity": "BOLD",
@@ -2117,11 +2096,11 @@
       "FRUITY",
       "SWEET",
       "VANILLA",
-      "HONEY",
+      "MALTY",
       "BOURBON_CASK",
       "LIGHT_BODY"
     ],
-    "intensity": "VANILLA",
+    "intensity": "MEDIUM",
     "mouthfeel": [
       "SOFT"
     ],
@@ -2154,7 +2133,7 @@
       "FRUITY",
       "LIGHT_BODY"
     ],
-    "intensity": "VANILLA",
+    "intensity": "MEDIUM",
     "mouthfeel": [
       "SOFT"
     ],
@@ -2196,7 +2175,7 @@
       "length": "LONG",
       "notes": [
         "SWEET",
-        "FRUITY",
+        "SWEET",
         "SPICE"
       ]
     },
@@ -2255,8 +2234,7 @@
       "SWEET",
       "SHERRY",
       "MALTY",
-      "NUTTY",
-      "MEDIUM"
+      "NUTTY"
     ],
     "intensity": "MEDIUM",
     "mouthfeel": [
@@ -2267,7 +2245,7 @@
       "length": "MEDIUM",
       "notes": [
         "SWEET",
-        "FRUITY"
+        "SWEET"
       ]
     },
     "experimental": false,
@@ -2289,9 +2267,8 @@
       "FRUITY",
       "SWEET",
       "VANILLA",
-      "WAXY",
-      "COASTAL",
-      "MEDIUM"
+      "MALTY",
+      "MALTY"
     ],
     "intensity": "MEDIUM",
     "mouthfeel": [
@@ -2328,7 +2305,7 @@
       "FRUITY",
       "LIGHT_BODY"
     ],
-    "intensity": "VANILLA",
+    "intensity": "MEDIUM",
     "mouthfeel": [
       "SOFT"
     ],
@@ -2396,7 +2373,7 @@
       "BOURBON_CASK",
       "LIGHT_BODY"
     ],
-    "intensity": "VANILLA",
+    "intensity": "MEDIUM",
     "mouthfeel": [
       "SOFT"
     ],
@@ -2426,8 +2403,7 @@
       "SWEET",
       "SPICY",
       "MALTY",
-      "SULFURY",
-      "MEDIUM"
+      "MALTY"
     ],
     "intensity": "MEDIUM",
     "mouthfeel": [
@@ -2460,11 +2436,11 @@
       "FRUITY",
       "SWEET",
       "FLORAL",
-      "HONEY",
+      "MALTY",
       "BOURBON_CASK",
       "LIGHT_BODY"
     ],
-    "intensity": "VANILLA",
+    "intensity": "MEDIUM",
     "mouthfeel": [
       "SOFT"
     ],
@@ -2494,10 +2470,9 @@
       "SWEET",
       "VANILLA",
       "BOURBON_CASK",
-      "SOFT",
       "LIGHT_BODY"
     ],
-    "intensity": "VANILLA",
+    "intensity": "MEDIUM",
     "mouthfeel": [
       "SOFT"
     ],
@@ -2527,8 +2502,7 @@
       "SWEET",
       "MALTY",
       "NUTTY",
-      "BOURBON_CASK",
-      "MEDIUM"
+      "BOURBON_CASK"
     ],
     "intensity": "MEDIUM",
     "mouthfeel": [
@@ -2563,7 +2537,7 @@
       "FRUITY",
       "SWEET",
       "FULL_BODY",
-      "COMPLEX"
+      "MALTY"
     ],
     "intensity": "BOLD",
     "mouthfeel": [
@@ -2597,8 +2571,7 @@
       "SWEET",
       "SPICY",
       "VANILLA",
-      "WINE_CASK",
-      "MEDIUM"
+      "WINE_CASK"
     ],
     "intensity": "MEDIUM",
     "mouthfeel": [
@@ -2632,8 +2605,7 @@
       "SMOKY",
       "SWEET",
       "MALTY",
-      "MALTY",
-      "MEDIUM"
+      "MALTY"
     ],
     "intensity": "MEDIUM",
     "mouthfeel": [
@@ -2671,7 +2643,7 @@
       "BOURBON_CASK",
       "LIGHT_BODY"
     ],
-    "intensity": "VANILLA",
+    "intensity": "MEDIUM",
     "mouthfeel": [
       "SOFT"
     ],
@@ -2701,8 +2673,7 @@
       "SMOKY",
       "FRUITY",
       "SWEET",
-      "BOURBON_CASK",
-      "MEDIUM"
+      "BOURBON_CASK"
     ],
     "intensity": "MEDIUM",
     "mouthfeel": [
@@ -2739,7 +2710,7 @@
       "BOURBON_CASK",
       "LIGHT_BODY"
     ],
-    "intensity": "VANILLA",
+    "intensity": "MEDIUM",
     "mouthfeel": [
       "SOFT",
       "DRY"
@@ -2773,7 +2744,7 @@
       "FRUITY",
       "LIGHT_BODY"
     ],
-    "intensity": "VANILLA",
+    "intensity": "MEDIUM",
     "mouthfeel": [
       "SOFT"
     ],
@@ -2803,8 +2774,7 @@
       "SWEET",
       "SHERRY",
       "NUTTY",
-      "CREAMY",
-      "MEDIUM"
+      "MALTY"
     ],
     "intensity": "MEDIUM",
     "mouthfeel": [
@@ -2815,7 +2785,7 @@
       "length": "MEDIUM",
       "notes": [
         "SWEET",
-        "FRUITY"
+        "SWEET"
       ]
     },
     "experimental": false,
@@ -2838,10 +2808,10 @@
       "SWEET",
       "MALTY",
       "NUTTY",
-      "COASTAL",
+      "MALTY",
       "LIGHT_BODY"
     ],
-    "intensity": "VANILLA",
+    "intensity": "MEDIUM",
     "mouthfeel": [
       "SOFT",
       "DRY"
@@ -2875,7 +2845,7 @@
       "BOURBON_CASK",
       "LIGHT_BODY"
     ],
-    "intensity": "VANILLA",
+    "intensity": "MEDIUM",
     "mouthfeel": [
       "SOFT"
     ],
@@ -2905,8 +2875,7 @@
       "VANILLA",
       "BOURBON_CASK",
       "SPICY",
-      "SWEET",
-      "MEDIUM"
+      "SWEET"
     ],
     "intensity": "MEDIUM",
     "mouthfeel": [
@@ -2978,7 +2947,7 @@
       "VANILLA",
       "LIGHT_BODY"
     ],
-    "intensity": "VANILLA",
+    "intensity": "MEDIUM",
     "mouthfeel": [
       "SOFT",
       "DRY"
@@ -3010,8 +2979,7 @@
       "VANILLA",
       "BOURBON_CASK",
       "FRUITY",
-      "SPICY",
-      "MEDIUM"
+      "SPICY"
     ],
     "intensity": "MEDIUM",
     "mouthfeel": [
@@ -3044,9 +3012,7 @@
       "SWEET",
       "SPICY",
       "VANILLA",
-      "BOURBON_CASK",
-      "DRY",
-      "MEDIUM"
+      "BOURBON_CASK"
     ],
     "intensity": "MEDIUM",
     "mouthfeel": [
@@ -3080,8 +3046,7 @@
       "VANILLA",
       "BOURBON_CASK",
       "FRUITY",
-      "SWEET",
-      "MEDIUM"
+      "SWEET"
     ],
     "intensity": "MEDIUM",
     "mouthfeel": [
@@ -3115,8 +3080,7 @@
       "VANILLA",
       "WINE_CASK",
       "FRUITY",
-      "LIGHT_BODY",
-      "MEDIUM"
+      "LIGHT_BODY"
     ],
     "intensity": "MEDIUM",
     "mouthfeel": [
@@ -3151,7 +3115,7 @@
       "BOURBON_CASK",
       "LIGHT_BODY"
     ],
-    "intensity": "VANILLA",
+    "intensity": "MEDIUM",
     "mouthfeel": [
       "SOFT"
     ],
@@ -3181,8 +3145,7 @@
       "FRUITY",
       "SWEET",
       "SPICY",
-      "SHERRY",
-      "MEDIUM"
+      "SHERRY"
     ],
     "intensity": "MEDIUM",
     "mouthfeel": [
@@ -3220,7 +3183,7 @@
       "LIGHT_BODY",
       "LIGHT_BODY"
     ],
-    "intensity": "VANILLA",
+    "intensity": "MEDIUM",
     "mouthfeel": [
       "SOFT"
     ],
@@ -3253,7 +3216,7 @@
       "BOURBON_CASK",
       "LIGHT_BODY"
     ],
-    "intensity": "VANILLA",
+    "intensity": "MEDIUM",
     "mouthfeel": [
       "SOFT"
     ],
@@ -3286,7 +3249,7 @@
       "LIGHT_BODY",
       "LIGHT_BODY"
     ],
-    "intensity": "VANILLA",
+    "intensity": "MEDIUM",
     "mouthfeel": [
       "SOFT"
     ],
@@ -3316,8 +3279,7 @@
       "SWEET",
       "VANILLA",
       "SHERRY",
-      "LIGHT_BODY",
-      "MEDIUM"
+      "LIGHT_BODY"
     ],
     "intensity": "MEDIUM",
     "mouthfeel": [
@@ -3351,8 +3313,7 @@
       "SWEET",
       "VANILLA",
       "SHERRY",
-      "WINE_CASK",
-      "MEDIUM"
+      "WINE_CASK"
     ],
     "intensity": "MEDIUM",
     "mouthfeel": [
@@ -3364,7 +3325,7 @@
       "notes": [
         "SWEET",
         "SPICE",
-        "FRUITY"
+        "SWEET"
       ]
     },
     "experimental": true,
@@ -3387,8 +3348,7 @@
       "SMOKY",
       "FRUITY",
       "SWEET",
-      "BOURBON_CASK",
-      "MEDIUM"
+      "BOURBON_CASK"
     ],
     "intensity": "MEDIUM",
     "mouthfeel": [
@@ -3422,8 +3382,7 @@
       "SWEET",
       "WINE_CASK",
       "VANILLA",
-      "FRUITY",
-      "MEDIUM"
+      "FRUITY"
     ],
     "intensity": "MEDIUM",
     "mouthfeel": [
@@ -3434,7 +3393,7 @@
       "length": "MEDIUM",
       "notes": [
         "SWEET",
-        "FRUITY"
+        "SWEET"
       ]
     },
     "experimental": true,
@@ -3460,7 +3419,7 @@
       "VANILLA",
       "LIGHT_BODY"
     ],
-    "intensity": "VANILLA",
+    "intensity": "MEDIUM",
     "mouthfeel": [
       "SOFT"
     ],
@@ -3468,7 +3427,7 @@
       "length": "MEDIUM",
       "notes": [
         "SWEET",
-        "FRUITY"
+        "SWEET"
       ]
     },
     "experimental": true,
@@ -3491,8 +3450,7 @@
       "SWEET",
       "VANILLA",
       "BOURBON_CASK",
-      "FRUITY",
-      "MEDIUM"
+      "FRUITY"
     ],
     "intensity": "MEDIUM",
     "mouthfeel": [
