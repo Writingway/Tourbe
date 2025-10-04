@@ -11,18 +11,18 @@ export const Insights: FC = () => {
       <div className="max-w-4xl mx-auto">
         <div className="mb-6">
           <Button variant="outline" onClick={() => (window.location.href = '/')}>
-            Back to Home
+            Retour à l'accueil
           </Button>
         </div>
 
         <h1 className="text-4xl font-bold text-gray-900 mb-8">
-          Analytics Insights
+          Statistiques analytiques
         </h1>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           <Card>
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
-              Quiz Starts
+              Démarrages du quiz
             </h3>
             <p className="text-4xl font-bold text-whisky-600">
               {insights.quizStarts}
@@ -31,7 +31,7 @@ export const Insights: FC = () => {
 
           <Card>
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
-              Quiz Completions
+              Complétions du quiz
             </h3>
             <p className="text-4xl font-bold text-whisky-600">
               {insights.quizCompletes}
@@ -40,7 +40,7 @@ export const Insights: FC = () => {
 
           <Card>
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
-              Completion Rate
+              Taux de complétion
             </h3>
             <p className="text-4xl font-bold text-whisky-600">
               {insights.completionRate}%
@@ -49,7 +49,7 @@ export const Insights: FC = () => {
 
           <Card>
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
-              Total Events
+              Événements totaux
             </h3>
             <p className="text-4xl font-bold text-whisky-600">
               {insights.quizStarts + insights.quizCompletes}
@@ -60,7 +60,7 @@ export const Insights: FC = () => {
         {insights.topStyles.length > 0 && (
           <Card>
             <h3 className="text-xl font-semibold text-gray-900 mb-4">
-              Top Style Selections
+              Préférences de style principales
             </h3>
             <div className="space-y-3">
               {insights.topStyles.map(([style, count]) => (

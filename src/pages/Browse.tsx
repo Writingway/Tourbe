@@ -48,11 +48,11 @@ export const Browse: FC = () => {
   };
 
   const formatPrice = (price: string) => {
-    if (price === 'ALL') return 'All Prices';
-    if (price === 'UNDER_40') return 'Under €40';
-    if (price === '40_70') return '€40-€70';
-    if (price === '70_120') return '€70-€120';
-    if (price === 'OVER_120') return '€120+';
+    if (price === 'ALL') return 'Tous les prix';
+    if (price === 'UNDER_40') return 'Moins de 40€';
+    if (price === '40_70') return '40€-70€';
+    if (price === '70_120') return '70€-120€';
+    if (price === 'OVER_120') return 'Plus de 120€';
     return price;
   };
 
@@ -72,17 +72,16 @@ export const Browse: FC = () => {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">Browse Whiskies</h1>
+          <h1 className="text-4xl font-bold text-gray-900 mb-2">Parcourir les whiskies</h1>
           <p className="text-gray-600">
-            Explore our collection of {whiskies.length} carefully curated whiskies from around the
-            world
+            Explorez notre collection de {whiskies.length} whiskies soigneusement sélectionnés du monde entier
           </p>
         </div>
 
         {/* Filters */}
         <div className="mb-8 flex flex-col sm:flex-row gap-4">
           <div className="flex-1">
-            <label className="block text-sm font-medium text-gray-700 mb-2">Region</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Région</label>
             <select
               value={selectedRegion}
               onChange={(e) => setSelectedRegion(e.target.value as Region | 'ALL')}
@@ -97,7 +96,7 @@ export const Browse: FC = () => {
           </div>
 
           <div className="flex-1">
-            <label className="block text-sm font-medium text-gray-700 mb-2">Price Range</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Gamme de prix</label>
             <select
               value={selectedPrice}
               onChange={(e) => setSelectedPrice(e.target.value as PriceBand | 'ALL')}
@@ -115,7 +114,7 @@ export const Browse: FC = () => {
         {/* Results count */}
         <div className="mb-6">
           <p className="text-sm text-gray-600">
-            Showing {filteredWhiskies.length} of {whiskies.length} whiskies
+            Affichage de {filteredWhiskies.length} whiskies sur {whiskies.length}
           </p>
         </div>
 
@@ -159,7 +158,7 @@ export const Browse: FC = () => {
                   (window.location.href = `/map?id=${whisky.id}`)
                 }
               >
-                View Distillery
+                Voir la distillerie
               </Button>
             </Card>
           ))}
@@ -168,7 +167,7 @@ export const Browse: FC = () => {
         {filteredWhiskies.length === 0 && (
           <div className="text-center py-12">
             <p className="text-gray-600 text-lg mb-4">
-              No whiskies found matching your filters
+              Aucun whisky ne correspond à vos filtres
             </p>
             <Button
               onClick={() => {
@@ -176,7 +175,7 @@ export const Browse: FC = () => {
                 setSelectedPrice('ALL');
               }}
             >
-              Clear Filters
+              Effacer les filtres
             </Button>
           </div>
         )}
@@ -184,7 +183,7 @@ export const Browse: FC = () => {
         {/* Back to Home */}
         <div className="mt-12 text-center">
           <Button variant="secondary" onClick={() => (window.location.href = '/')}>
-            ← Back to Home
+            Retour à l'accueil
           </Button>
         </div>
       </div>

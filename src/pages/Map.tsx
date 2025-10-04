@@ -14,16 +14,16 @@ export const Map: FC = () => {
             variant="outline"
             onClick={() => (window.location.href = '/results')}
           >
-            Back to Results
+            Retour aux résultats
           </Button>
         </div>
 
         <div className="mb-6 text-center">
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
-            Distillery Locations
+            Carte des distilleries
           </h1>
           <p className="text-gray-600">
-            Explore where your top whisky matches are made
+            Explorez l'origine de vos meilleures correspondances
           </p>
         </div>
 

@@ -34,7 +34,7 @@ export const Question: FC<QuestionProps> = ({
       <div className="flex gap-4 justify-between">
         {onBack ? (
           <Button variant="outline" onClick={onBack}>
-            Back
+            Retour
           </Button>
         ) : (
           <div />
@@ -44,7 +44,7 @@ export const Question: FC<QuestionProps> = ({
           onClick={onNext}
           disabled={!canProceed}
         >
-          {isLastStep ? 'See my matches' : 'Next'}
+          {isLastStep ? 'Voir mes résultats' : 'Suivant'}
         </Button>
       </div>
     </div>

@@ -34,10 +34,10 @@ export const ResultCard: FC<ResultCardProps> = ({ match, rank }) => {
             <div>
               <div className="flex items-center gap-2 mb-1">
                 <Badge variant="success" className="text-xs">
-                  #{rank} Match
+                  Match #{rank}
                 </Badge>
                 <Badge variant="warning" className="text-xs">
-                  {score.toFixed(1)}% Match
+                  {score.toFixed(1)}% Correspondance
                 </Badge>
               </div>
               <h3 className="text-2xl font-bold text-gray-900">
@@ -50,17 +50,17 @@ export const ResultCard: FC<ResultCardProps> = ({ match, rank }) => {
           </div>
 
           <div className="flex gap-4 text-sm text-gray-600 mb-3">
-            <span>ABV: {whisky.abv}%</span>
+            <span>Degré : {whisky.abv}%</span>
             <span>•</span>
             <span>
-              Price:{' '}
+              Prix :{' '}
               {whisky.priceBand === 'UNDER_40'
-                ? 'Under $40'
+                ? 'Moins de 40€'
                 : whisky.priceBand === '40_70'
-                  ? '$40-70'
+                  ? '40€-70€'
                   : whisky.priceBand === '70_120'
-                    ? '$70-120'
-                    : 'Over $120'}
+                    ? '70€-120€'
+                    : 'Plus de 120€'}
             </span>
           </div>
 
@@ -85,10 +85,10 @@ export const ResultCard: FC<ResultCardProps> = ({ match, rank }) => {
                 size="sm"
                 onClick={() => setShowBreakdown(!showBreakdown)}
               >
-                {showBreakdown ? 'Hide' : 'Why this match?'}
+                {showBreakdown ? 'Masquer les détails' : 'Pourquoi ce match ?'}
               </Button>
               <Button variant="secondary" size="sm" onClick={handleViewDistillery}>
-                View distillery
+                Voir la distillerie
               </Button>
             </div>
           </div>

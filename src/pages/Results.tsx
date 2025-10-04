@@ -22,13 +22,13 @@ export const Results: FC = () => {
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-amber-50 to-orange-100 px-4 py-12">
         <div className="text-center max-w-md">
           <h2 className="text-3xl font-bold text-gray-900 mb-4">
-            No results yet
+            Aucun résultat pour le moment
           </h2>
           <p className="text-gray-600 mb-6">
-            Take the quiz to discover your perfect whisky matches!
+            Répondez au quiz pour découvrir vos whiskies parfaits !
           </p>
           <Button variant="primary" onClick={() => (window.location.href = '/quiz')}>
-            Start Quiz
+            Commencer le quiz
           </Button>
         </div>
       </div>
@@ -40,10 +40,10 @@ export const Results: FC = () => {
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Your Perfect Whisky Matches
+            Vos whiskies parfaits
           </h1>
           <p className="text-xl text-gray-600">
-            Based on your preferences, here are your top 3 recommendations
+            D'après vos préférences, voici vos 3 meilleures recommandations
           </p>
         </div>
 
@@ -55,7 +55,7 @@ export const Results: FC = () => {
 
         <div className="text-center">
           <Button variant="outline" size="lg" onClick={handleTryAgain}>
-            Try again
+            Réessayer
           </Button>
         </div>
       </div>

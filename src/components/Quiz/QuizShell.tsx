@@ -59,6 +59,12 @@ const PRICE_BANDS: PriceBand[] = ['UNDER_40', '40_70', '70_120', 'OVER_120'];
 
 const OPENNESS_OPTIONS: Openness[] = ['CONSERVATIVE', 'CURIOUS', 'ADVENTUROUS'];
 
+const OPENNESS_LABELS: Record<Openness, string> = {
+  CONSERVATIVE: 'Conservateur',
+  CURIOUS: 'Curieux',
+  ADVENTUROUS: 'Aventureux',
+};
+
 const ABV_COMFORT_OPTIONS: ABVComfort[] = [
   'UNDER_43',
   '43_46',
@@ -118,8 +124,8 @@ export const QuizShell: FC = () => {
 
         {currentStep === 0 && (
           <Question
-            title="What flavors appeal to you?"
-            subtitle="Select all that sound interesting"
+            title="Quels arômes appréciez-vous ?"
+            subtitle="Sélectionnez toutes les réponses applicables"
             onNext={handleNext}
             canProceed={answers.styleTags.length > 0}
           >
@@ -150,8 +156,8 @@ export const QuizShell: FC = () => {
 
         {currentStep === 1 && (
           <Question
-            title="What intensity do you prefer?"
-            subtitle="Choose one"
+            title="Quelle intensité préférez-vous ?"
+            subtitle="Choisissez-en une"
             onNext={handleNext}
             onBack={handleBack}
             canProceed={answers.intensity !== null}
@@ -178,8 +184,8 @@ export const QuizShell: FC = () => {
 
         {currentStep === 2 && (
           <Question
-            title="What mouthfeel do you enjoy?"
-            subtitle="Select all that apply"
+            title="Quelle texture en bouche préférez-vous ?"
+            subtitle="Sélectionnez toutes les réponses applicables"
             onNext={handleNext}
             onBack={handleBack}
             canProceed={answers.mouthfeel.length > 0}
@@ -206,8 +212,8 @@ export const QuizShell: FC = () => {
 
         {currentStep === 3 && (
           <Question
-            title="How long should the finish be?"
-            subtitle="Choose one"
+            title="Combien de temps la finale doit-elle durer ?"
+            subtitle="Choisissez-en une"
             onNext={handleNext}
             onBack={handleBack}
             canProceed={answers.finishLength !== null}
@@ -234,8 +240,8 @@ export const QuizShell: FC = () => {
 
         {currentStep === 4 && (
           <Question
-            title="What finish notes do you prefer?"
-            subtitle="Select all that apply"
+            title="Quelles notes de finale appréciez-vous ?"
+            subtitle="Sélectionnez toutes les réponses applicables"
             onNext={handleNext}
             onBack={handleBack}
             canProceed={answers.finishNotes.length > 0}
@@ -262,8 +268,8 @@ export const QuizShell: FC = () => {
 
         {currentStep === 5 && (
           <Question
-            title="Any regional preferences?"
-            subtitle="Select all that interest you, or skip"
+            title="Quelles régions vous intéressent ?"
+            subtitle="Sélectionnez toutes celles qui vous intéressent, ou passez"
             onNext={handleNext}
             onBack={handleBack}
           >
@@ -289,8 +295,8 @@ export const QuizShell: FC = () => {
 
         {currentStep === 6 && (
           <Question
-            title="What's your budget?"
-            subtitle="Select all that work for you"
+            title="Quel est votre budget ?"
+            subtitle="Sélectionnez tout ce qui vous convient"
             onNext={handleNext}
             onBack={handleBack}
             canProceed={answers.budget.length > 0}
@@ -308,12 +314,12 @@ export const QuizShell: FC = () => {
                 >
                   <span className="text-lg font-medium">
                     {band === 'UNDER_40'
-                      ? 'Under $40'
+                      ? 'Moins de 40€'
                       : band === '40_70'
-                        ? '$40-70'
+                        ? '40€-70€'
                         : band === '70_120'
-                          ? '$70-120'
-                          : 'Over $120'}
+                          ? '70€-120€'
+                          : 'Plus de 120€'}
                   </span>
                 </button>
               ))}
@@ -323,8 +329,8 @@ export const QuizShell: FC = () => {
 
         {currentStep === 7 && (
           <Question
-            title="Two final questions"
-            subtitle="Help us fine-tune your matches"
+            title="Deux dernières questions"
+            subtitle="Aidez-nous à affiner vos recommandations"
             onNext={handleNext}
             onBack={handleBack}
             isLastStep
@@ -333,7 +339,7 @@ export const QuizShell: FC = () => {
             <div className="space-y-8">
               <div>
                 <h3 className="text-xl font-semibold mb-4 text-gray-800">
-                  How open are you to trying new things?
+                  Êtes-vous ouvert à essayer de nouvelles choses ?
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   {OPENNESS_OPTIONS.map((openness) => (
@@ -347,7 +353,7 @@ export const QuizShell: FC = () => {
                       }`}
                     >
                       <span className="text-lg font-medium">
-                        {formatLabel(openness)}
+                        {OPENNESS_LABELS[openness]}
                       </span>
                     </button>
                   ))}
@@ -356,7 +362,7 @@ export const QuizShell: FC = () => {
 
               <div>
                 <h3 className="text-xl font-semibold mb-4 text-gray-800">
-                  What ABV range are you comfortable with?
+                  Quel degré d'alcool préférez-vous ?
                 </h3>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   {ABV_COMFORT_OPTIONS.map((abv) => (

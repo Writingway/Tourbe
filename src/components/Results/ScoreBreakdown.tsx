@@ -7,27 +7,27 @@ interface ScoreBreakdownProps {
 }
 
 const breakdownLabels: Record<keyof ScoreBreakdownType, string> = {
-  styleMatch: 'Style Match',
-  intensityMatch: 'Intensity Match',
-  mouthfeelMatch: 'Mouthfeel Match',
-  finishMatch: 'Finish Match',
-  regionMatch: 'Region Match',
-  budgetMatch: 'Budget Match',
-  abvMatch: 'ABV Match',
-  experimentalBonus: 'Experimental Bonus',
-  styleSimilarity: 'Style Similarity',
+  styleMatch: 'Correspondance de style',
+  intensityMatch: 'Correspondance d\'intensité',
+  mouthfeelMatch: 'Correspondance de texture',
+  finishMatch: 'Correspondance de finale',
+  regionMatch: 'Correspondance de région',
+  budgetMatch: 'Correspondance de budget',
+  abvMatch: 'Correspondance de degré',
+  experimentalBonus: 'Bonus expérimental',
+  styleSimilarity: 'Similitude de style',
 };
 
 const breakdownDescriptions: Record<keyof ScoreBreakdownType, string> = {
-  styleMatch: 'How well the whisky matches your selected flavor tags',
-  intensityMatch: 'Alignment with your preferred intensity level',
-  mouthfeelMatch: 'Match with your desired mouthfeel characteristics',
-  finishMatch: 'How the finish length and notes align with your preferences',
-  regionMatch: 'Compatibility with your regional preferences',
-  budgetMatch: 'Fit within your budget range',
-  abvMatch: 'Alignment with your ABV comfort range',
-  experimentalBonus: 'Bonus for experimental whiskies if you are adventurous',
-  styleSimilarity: 'Overall similarity to your taste profile',
+  styleMatch: 'Degré de correspondance avec vos arômes sélectionnés',
+  intensityMatch: 'Alignement avec votre niveau d\'intensité préféré',
+  mouthfeelMatch: 'Correspondance avec vos caractéristiques de texture souhaitées',
+  finishMatch: 'Alignement de la longueur et des notes de finale avec vos préférences',
+  regionMatch: 'Compatibilité avec vos préférences régionales',
+  budgetMatch: 'Adaptation à votre gamme de budget',
+  abvMatch: 'Alignement avec votre gamme de degré d\'alcool préférée',
+  experimentalBonus: 'Bonus pour les whiskies expérimentaux si vous êtes aventureux',
+  styleSimilarity: 'Similitude globale avec votre profil gustatif',
 };
 
 export const ScoreBreakdown: FC<ScoreBreakdownProps> = ({ breakdown }) => {
@@ -36,7 +36,7 @@ export const ScoreBreakdown: FC<ScoreBreakdownProps> = ({ breakdown }) => {
       {({ open }) => (
         <>
           <Disclosure.Button className="flex justify-between items-center w-full px-4 py-2 text-sm font-medium text-whisky-900 bg-whisky-100 rounded-lg hover:bg-whisky-200 focus:outline-none focus-visible:ring focus-visible:ring-whisky-500 focus-visible:ring-opacity-75">
-            <span>View score breakdown</span>
+            <span>Voir le détail des scores</span>
             <svg
               className={`${open ? 'rotate-180 transform' : ''} h-5 w-5 text-whisky-500 transition-transform`}
               fill="none"

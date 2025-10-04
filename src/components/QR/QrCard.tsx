@@ -9,10 +9,10 @@ export const QrCard: FC = () => {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-amber-50 to-orange-100 px-4 py-12">
       <Card variant="elevated" className="max-w-md w-full text-center">
         <h2 className="text-2xl font-bold text-gray-900 mb-4">
-          Scan to Find Your Whisky
+          Scannez pour découvrir votre whisky
         </h2>
         <p className="text-gray-600 mb-6">
-          Share this QR code to help others discover their perfect whisky match
+          Partagez ce code QR pour aider les autres à découvrir leur whisky parfait
         </p>
         <div className="flex justify-center mb-6">
           <div className="bg-white p-4 rounded-lg shadow-inner">
