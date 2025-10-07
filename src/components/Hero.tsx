@@ -1,14 +1,10 @@
 import { FC, useState } from 'react';
 import { Dialog } from '@headlessui/react';
-import { motion } from 'framer-motion';
-import { ParticleBackground } from './3D/ParticleBackground';
-import { WhiskyBottle } from './3D/WhiskyBottle';
-import { PageTransition } from './Animations/PageTransition';
+import { Navigation } from './Navigation';
 import { useQuizStore } from '../store/useQuizStore';
 
 export const Hero: FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [buttonHover, setButtonHover] = useState(false);
   const resetQuiz = useQuizStore((state) => state.resetQuiz);
 
   const handleStartQuiz = () => {
@@ -18,122 +14,74 @@ export const Hero: FC = () => {
 
   return (
     <>
-      <PageTransition>
-        <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
-          {/* Particle Background */}
-          <ParticleBackground />
+      <div className="relative min-h-screen textured-bg">
+        {/* Navigation */}
+        <Navigation currentPath="/" />
 
-          {/* 3D Bottle Background */}
-          <div className="absolute inset-0 opacity-20">
-            <WhiskyBottle />
-          </div>
+        {/* Hero Content */}
+        <div className="relative min-h-screen flex items-center justify-center px-4 py-12">
+          <div className="max-w-5xl w-full text-center">
+            {/* Decorative whisky glass icon */}
+            <div className="flex justify-center mb-8">
+              <div className="w-20 h-24 border-4 border-gold-400 rounded-b-full relative overflow-hidden">
+                <div className="absolute bottom-0 left-0 right-0 h-3/4 bg-gradient-to-t from-amber-600 to-amber-400"></div>
+              </div>
+            </div>
 
-          {/* Gradient Overlays */}
-          <div className="absolute inset-0 bg-gradient-to-b from-dark-950 via-transparent to-dark-950 pointer-events-none" />
-          <div className="absolute inset-0 bg-gradient-to-r from-dark-950/50 via-transparent to-dark-950/50 pointer-events-none" />
-
-          {/* Content */}
-          <div className="relative z-10 max-w-6xl w-full px-4 py-12 text-center">
-            {/* Animated Title */}
-            <motion.h1
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6"
-              style={{ fontFamily: 'var(--font-family-serif)' }}
-            >
-              <span className="text-gradient">
-                Fini les hésitations
-              </span>
+            {/* Title */}
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-serif font-bold mb-6 leading-tight">
+              <span className="text-gradient">Fini les hésitations</span>
               <br />
-              <span className="text-white">
-                découvrez le whisky
-              </span>
+              <span className="text-cream-100">découvrez le whisky</span>
               <br />
-              <span className="text-gradient">
-                fait pour vous
-              </span>
-            </motion.h1>
+              <span className="text-gradient">fait pour vous</span>
+            </h1>
 
             {/* Subtitle */}
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="text-xl md:text-2xl text-copper-200 mb-12 max-w-3xl mx-auto"
-              style={{ fontFamily: 'var(--font-family-sans)' }}
-            >
+            <p className="text-lg md:text-xl text-cream-300 mb-12 max-w-3xl mx-auto font-sans">
               Répondez à quelques questions simples et trouvez votre whisky idéal parmi notre sélection premium
-            </motion.p>
+            </p>
 
             {/* CTA Buttons */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-              className="flex flex-col sm:flex-row gap-6 justify-center items-center"
-            >
-              {/* Primary CTA with Ripple Effect */}
-              <motion.button
-                onHoverStart={() => setButtonHover(true)}
-                onHoverEnd={() => setButtonHover(false)}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <button
                 onClick={handleStartQuiz}
-                className="relative px-12 py-5 rounded-full font-semibold text-lg overflow-hidden group"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                className="btn-primary text-lg px-8"
               >
-                <div className="absolute inset-0 copper-gradient" />
-                {buttonHover && (
-                  <motion.div
-                    className="absolute inset-0 bg-white"
-                    initial={{ scale: 0, opacity: 0.5 }}
-                    animate={{ scale: 2, opacity: 0 }}
-                    transition={{ duration: 0.6 }}
-                  />
-                )}
-                <span className="relative z-10 text-dark-950 font-bold">
-                  Trouver mon whisky
-                </span>
-              </motion.button>
+                Trouver mon whisky
+              </button>
 
-              {/* Secondary Buttons */}
-              <motion.button
+              <button
                 onClick={() => (window.location.href = '/browse')}
-                className="glass-effect px-8 py-4 rounded-full text-copper-200 font-medium hover:bg-glass-light transition-all"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                className="btn-secondary"
               >
                 Parcourir la collection
-              </motion.button>
+              </button>
 
-              <motion.button
+              <button
                 onClick={() => setIsModalOpen(true)}
-                className="px-8 py-4 rounded-full text-copper-300 font-medium border border-copper-500/30 hover:border-copper-500/60 transition-all"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                className="btn-secondary"
               >
                 Comment ça marche
-              </motion.button>
-            </motion.div>
+              </button>
+            </div>
 
-            {/* Scroll Indicator */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1.2, duration: 1 }}
-              className="absolute bottom-12 left-1/2 transform -translate-x-1/2"
-            >
-              <motion.div
-                animate={{ y: [0, 10, 0] }}
-                transition={{ duration: 2, repeat: Infinity }}
-                className="w-6 h-10 rounded-full border-2 border-copper-500/50 flex items-start justify-center p-2"
-              >
-                <motion.div className="w-1.5 h-3 bg-copper-500 rounded-full" />
-              </motion.div>
-            </motion.div>
+            {/* Features Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16 max-w-4xl mx-auto">
+              {[
+                { title: '101 Whiskies', desc: 'Sélection premium' },
+                { title: 'Algorithme intelligent', desc: 'Recommandations précises' },
+                { title: 'Rapide', desc: 'Résultats en 2 minutes' },
+              ].map((feature, idx) => (
+                <div key={idx} className="card p-6 text-center">
+                  <h3 className="text-gold-400 font-semibold mb-2">{feature.title}</h3>
+                  <p className="text-cream-400 text-sm">{feature.desc}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      </PageTransition>
+      </div>
 
       {/* Modal */}
       <Dialog
@@ -141,67 +89,46 @@ export const Hero: FC = () => {
         onClose={() => setIsModalOpen(false)}
         className="relative z-50"
       >
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
+        <div
           className="fixed inset-0 bg-black/80 backdrop-blur-sm"
           aria-hidden="true"
         />
         <div className="fixed inset-0 flex items-center justify-center p-4">
-          <Dialog.Panel>
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="glass-effect max-w-md rounded-2xl p-8"
-            >
-              <Dialog.Title
-                className="text-3xl font-bold text-gradient mb-6"
-                style={{ fontFamily: 'var(--font-family-serif)' }}
+          <Dialog.Panel className="card max-w-lg w-full p-8">
+            <Dialog.Title className="text-3xl font-serif font-bold text-gradient mb-6">
+              Comment ça marche
+            </Dialog.Title>
+            <ul className="space-y-6 text-left">
+              {[
+                {
+                  num: '1',
+                  text: "Répondez aux questions sur vos préférences gustatives, des profils aromatiques à l'intensité et à la finale",
+                },
+                {
+                  num: '2',
+                  text: 'Notre algorithme analyse vos réponses parmi 101 whiskies soigneusement sélectionnés',
+                },
+                {
+                  num: '3',
+                  text: 'Obtenez des recommandations personnalisées avec scores de correspondance et notes de dégustation détaillés',
+                },
+              ].map((item, idx) => (
+                <li key={idx} className="flex gap-4">
+                  <span className="flex-shrink-0 w-8 h-8 rounded-full bg-gold-400 flex items-center justify-center font-bold text-dark-950">
+                    {item.num}
+                  </span>
+                  <span className="pt-1 text-cream-200">{item.text}</span>
+                </li>
+              ))}
+            </ul>
+            <div className="mt-8">
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="w-full btn-primary"
               >
-                Comment ça marche
-              </Dialog.Title>
-              <ul className="space-y-6 text-left text-copper-100">
-                {[
-                  {
-                    num: '1',
-                    text: "Répondez aux questions sur vos préférences gustatives, des profils aromatiques à l'intensité et à la finale",
-                  },
-                  {
-                    num: '2',
-                    text: 'Notre algorithme analyse vos réponses parmi 101 whiskies soigneusement sélectionnés',
-                  },
-                  {
-                    num: '3',
-                    text: 'Obtenez des recommandations personnalisées avec scores de correspondance et notes de dégustation détaillés',
-                  },
-                ].map((item, idx) => (
-                  <motion.li
-                    key={idx}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: idx * 0.1 + 0.3 }}
-                    className="flex gap-4"
-                  >
-                    <span className="flex-shrink-0 w-8 h-8 rounded-full bg-copper-500 flex items-center justify-center font-bold text-dark-950">
-                      {item.num}
-                    </span>
-                    <span className="pt-1">{item.text}</span>
-                  </motion.li>
-                ))}
-              </ul>
-              <div className="mt-8">
-                <motion.button
-                  onClick={() => setIsModalOpen(false)}
-                  className="w-full copper-gradient px-8 py-4 rounded-full text-dark-950 font-bold"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  Compris
-                </motion.button>
-              </div>
-            </motion.div>
+                Compris
+              </button>
+            </div>
           </Dialog.Panel>
         </div>
       </Dialog>

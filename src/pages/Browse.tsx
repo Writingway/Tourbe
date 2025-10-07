@@ -122,8 +122,12 @@ export const Browse: FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredWhiskies.map((whisky) => (
             <Card key={whisky.id} className="hover:shadow-lg transition-shadow">
-              <div className="aspect-[3/4] bg-gradient-to-br from-whisky-100 to-whisky-200 rounded-lg mb-4 flex items-center justify-center">
-                <span className="text-6xl">🥃</span>
+              <div className="aspect-[3/4] bg-gradient-to-br from-amber-900/20 to-dark-700 rounded-lg mb-4 flex items-center justify-center overflow-hidden">
+                <img
+                  src={whisky.image}
+                  alt={whisky.name}
+                  className="w-full h-full object-contain p-4"
+                />
               </div>
 
               <h3 className="text-xl font-bold text-gray-900 mb-1">{whisky.name}</h3>

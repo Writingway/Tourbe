@@ -1,10 +1,7 @@
 import { FC } from 'react';
-import { motion } from 'framer-motion';
 import { useQuizStore } from '../../store/useQuizStore';
-import { LiquidProgress } from './LiquidProgress';
-import { Question } from './Question';
-import { ParticleBackground } from '../3D/ParticleBackground';
-import { PageTransition } from '../Animations/PageTransition';
+import { Navigation } from '../Navigation';
+import { QuizQuestion as Question } from './QuizQuestion';
 import { matchWhiskies } from '../../lib/matching';
 import whiskiesData from '../../data/whiskies.json';
 import type {
@@ -141,59 +138,71 @@ export const QuizShell: FC = () => {
   };
 
   return (
-    <PageTransition>
-      <div className="relative min-h-screen px-4 py-12">
-        <ParticleBackground />
+    <div className="min-h-screen textured-bg">
+      <Navigation currentPath="/quiz" />
 
-        <div className="relative z-10 max-w-5xl mx-auto">
-          <div className="mb-12">
-            <LiquidProgress currentStep={currentStep + 1} totalSteps={totalSteps} />
+      <div className="px-4 py-24 max-w-4xl mx-auto">
+        {/* Progress Bar */}
+        <div className="mb-8">
+          <div className="flex justify-between items-center mb-2">
+            <span className="text-cream-300 text-sm font-medium">
+              Question {currentStep + 1} sur {totalSteps}
+            </span>
+            <span className="text-gold-400 text-sm font-medium">
+              {Math.round(((currentStep + 1) / totalSteps) * 100)}%
+            </span>
           </div>
+          <div className="h-2 bg-dark-700 rounded-full overflow-hidden">
+            <div
+              className="h-full bg-gradient-to-r from-gold-400 to-amber-500 transition-all duration-500"
+              style={{ width: `${((currentStep + 1) / totalSteps) * 100}%` }}
+            />
+          </div>
+        </div>
 
-        {currentStep === 0 && (
-          <Question
-            title="Quel est votre niveau de connaissance du whisky ?"
-            subtitle="Choisissez le niveau qui vous correspond le mieux"
-            onNext={handleNext}
-            canProceed={answers.userLevel !== null}
-          >
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {USER_LEVELS.map((level, idx) => (
-                <motion.button
-                  key={level}
-                  onClick={() => setSingleSelect('userLevel', level)}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: idx * 0.1 }}
-                  whileHover={{
-                    scale: 1.05,
-                    rotateY: 5,
-                  }}
-                  whileTap={{ scale: 0.95 }}
-                  className={`p-8 rounded-xl transition-all ${
-                    answers.userLevel === level
-                      ? 'glass-effect border-2 border-copper-500 bg-copper-500/20'
-                      : 'glass-effect border-2 border-dark-700 hover:border-copper-500/50'
-                  }`}
-                  style={{ transformStyle: 'preserve-3d' }}
-                >
-                  <div className="text-center">
-                    <h3 className={`text-xl font-bold mb-2 ${
-                      answers.userLevel === level ? 'text-copper-300' : 'text-copper-100'
-                    }`}>
-                      {USER_LEVEL_LABELS[level].title}
-                    </h3>
-                    <p className={`text-sm ${
-                      answers.userLevel === level ? 'text-copper-200' : 'text-copper-200/70'
-                    }`}>
-                      {USER_LEVEL_LABELS[level].description}
-                    </p>
-                  </div>
-                </motion.button>
-              ))}
+        {/* Questions */}
+        <div className="card p-8 md:p-12">
+          {currentStep === 0 && (
+            <div>
+              <h2 className="text-3xl md:text-4xl font-serif font-bold text-gradient mb-3">
+                Quel est votre niveau de connaissance du whisky ?
+              </h2>
+              <p className="text-cream-400 mb-8">
+                Choisissez le niveau qui vous correspond le mieux
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {USER_LEVELS.map((level) => (
+                  <button
+                    key={level}
+                    onClick={() => setSingleSelect('userLevel', level)}
+                    className={`p-6 rounded-lg border-2 transition-all ${
+                      answers.userLevel === level
+                        ? 'border-gold-400 bg-gold-900/20'
+                        : 'border-dark-600 hover:border-amber-700 bg-dark-700'
+                    }`}
+                  >
+                    <div className="text-center">
+                      <h3 className={`text-lg font-bold mb-2 ${
+                        answers.userLevel === level ? 'text-gold-300' : 'text-cream-200'
+                      }`}>
+                        {USER_LEVEL_LABELS[level].title}
+                      </h3>
+                      <p className="text-sm text-cream-400">
+                        {USER_LEVEL_LABELS[level].description}
+                      </p>
+                    </div>
+                  </button>
+                ))}
+              </div>
+              {answers.userLevel && (
+                <div className="mt-8 flex justify-end">
+                  <button onClick={handleNext} className="btn-primary">
+                    Suivant →
+                  </button>
+                </div>
+              )}
             </div>
-          </Question>
-        )}
+          )}
 
         {answers.userLevel === 'BEGINNER' && currentStep === 1 && (
           <Question
@@ -210,8 +219,8 @@ export const QuizShell: FC = () => {
                   onClick={() => setSingleSelect('flavorProfile', profile)}
                   className={`p-6 rounded-lg border-2 transition-all ${
                     answers.flavorProfile === profile
-                      ? 'border-whisky-600 bg-whisky-50'
-                      : 'border-gray-300 bg-white hover:border-whisky-400'
+                      ? 'border-gold-400 bg-gold-900/20 text-gold-300'
+                      : 'border-dark-600 bg-dark-700 text-cream-200 hover:border-amber-700'
                   }`}
                 >
                   <span className="text-lg font-medium">
@@ -241,8 +250,8 @@ export const QuizShell: FC = () => {
                   onClick={() => toggleMultiSelect('budget', band)}
                   className={`p-6 rounded-lg border-2 transition-all ${
                     answers.budget.includes(band)
-                      ? 'border-whisky-600 bg-whisky-50'
-                      : 'border-gray-300 bg-white hover:border-whisky-400'
+                      ? 'border-gold-400 bg-gold-900/20 text-gold-300'
+                      : 'border-dark-600 bg-dark-700 text-cream-200 hover:border-amber-700'
                   }`}
                 >
                   <span className="text-lg font-medium">
@@ -275,8 +284,8 @@ export const QuizShell: FC = () => {
                   onClick={() => setSingleSelect('usage', usage)}
                   className={`p-6 rounded-lg border-2 transition-all ${
                     answers.usage === usage
-                      ? 'border-whisky-600 bg-whisky-50'
-                      : 'border-gray-300 bg-white hover:border-whisky-400'
+                      ? 'border-gold-400 bg-gold-900/20 text-gold-300'
+                      : 'border-dark-600 bg-dark-700 text-cream-200 hover:border-amber-700'
                   }`}
                 >
                   <span className="text-lg font-medium">
@@ -305,8 +314,8 @@ export const QuizShell: FC = () => {
                   onClick={() => setSingleSelect('originPreference', origin)}
                   className={`p-6 rounded-lg border-2 transition-all ${
                     answers.originPreference === origin
-                      ? 'border-whisky-600 bg-whisky-50'
-                      : 'border-gray-300 bg-white hover:border-whisky-400'
+                      ? 'border-gold-400 bg-gold-900/20 text-gold-300'
+                      : 'border-dark-600 bg-dark-700 text-cream-200 hover:border-amber-700'
                   }`}
                 >
                   <span className="text-lg font-medium">
@@ -337,8 +346,8 @@ export const QuizShell: FC = () => {
                   onClick={() => setSingleSelect('openness', openness)}
                   className={`p-6 rounded-lg border-2 transition-all ${
                     answers.openness === openness
-                      ? 'border-whisky-600 bg-whisky-50'
-                      : 'border-gray-300 bg-white hover:border-whisky-400'
+                      ? 'border-gold-400 bg-gold-900/20 text-gold-300'
+                      : 'border-dark-600 bg-dark-700 text-cream-200 hover:border-amber-700'
                   }`}
                 >
                   <span className="text-lg font-medium">
@@ -364,8 +373,8 @@ export const QuizShell: FC = () => {
                   onClick={() => toggleMultiSelect('regions', region)}
                   className={`p-4 rounded-lg border-2 transition-all ${
                     answers.regions.includes(region)
-                      ? 'border-whisky-600 bg-whisky-50'
-                      : 'border-gray-300 bg-white hover:border-whisky-400'
+                      ? 'border-gold-400 bg-gold-900/20 text-gold-300'
+                      : 'border-dark-600 bg-dark-700 text-cream-200 hover:border-amber-700'
                   }`}
                 >
                   <span className="text-sm font-medium">
@@ -392,8 +401,8 @@ export const QuizShell: FC = () => {
                   onClick={() => setSingleSelect('peatLevel', level)}
                   className={`p-6 rounded-lg border-2 transition-all ${
                     answers.peatLevel === level
-                      ? 'border-whisky-600 bg-whisky-50'
-                      : 'border-gray-300 bg-white hover:border-whisky-400'
+                      ? 'border-gold-400 bg-gold-900/20 text-gold-300'
+                      : 'border-dark-600 bg-dark-700 text-cream-200 hover:border-amber-700'
                   }`}
                 >
                   <span className="text-lg font-medium">
@@ -423,8 +432,8 @@ export const QuizShell: FC = () => {
                   onClick={() => setSingleSelect('caskType', cask)}
                   className={`p-6 rounded-lg border-2 transition-all ${
                     answers.caskType === cask
-                      ? 'border-whisky-600 bg-whisky-50'
-                      : 'border-gray-300 bg-white hover:border-whisky-400'
+                      ? 'border-gold-400 bg-gold-900/20 text-gold-300'
+                      : 'border-dark-600 bg-dark-700 text-cream-200 hover:border-amber-700'
                   }`}
                 >
                   <span className="text-lg font-medium">
@@ -454,8 +463,8 @@ export const QuizShell: FC = () => {
                   onClick={() => setSingleSelect('whiskyAge', age)}
                   className={`p-6 rounded-lg border-2 transition-all ${
                     answers.whiskyAge === age
-                      ? 'border-whisky-600 bg-whisky-50'
-                      : 'border-gray-300 bg-white hover:border-whisky-400'
+                      ? 'border-gold-400 bg-gold-900/20 text-gold-300'
+                      : 'border-dark-600 bg-dark-700 text-cream-200 hover:border-amber-700'
                   }`}
                 >
                   <span className="text-lg font-medium">
@@ -485,8 +494,8 @@ export const QuizShell: FC = () => {
                   onClick={() => setSingleSelect('whiskyType', type)}
                   className={`p-6 rounded-lg border-2 transition-all ${
                     answers.whiskyType === type
-                      ? 'border-whisky-600 bg-whisky-50'
-                      : 'border-gray-300 bg-white hover:border-whisky-400'
+                      ? 'border-gold-400 bg-gold-900/20 text-gold-300'
+                      : 'border-dark-600 bg-dark-700 text-cream-200 hover:border-amber-700'
                   }`}
                 >
                   <span className="text-lg font-medium">
@@ -513,8 +522,8 @@ export const QuizShell: FC = () => {
                   onClick={() => toggleMultiSelect('budget', band)}
                   className={`p-6 rounded-lg border-2 transition-all ${
                     answers.budget.includes(band)
-                      ? 'border-whisky-600 bg-whisky-50'
-                      : 'border-gray-300 bg-white hover:border-whisky-400'
+                      ? 'border-gold-400 bg-gold-900/20 text-gold-300'
+                      : 'border-dark-600 bg-dark-700 text-cream-200 hover:border-amber-700'
                   }`}
                 >
                   <span className="text-lg font-medium">
@@ -548,8 +557,8 @@ export const QuizShell: FC = () => {
                   onClick={() => setSingleSelect('openness', openness)}
                   className={`p-6 rounded-lg border-2 transition-all ${
                     answers.openness === openness
-                      ? 'border-whisky-600 bg-whisky-50'
-                      : 'border-gray-300 bg-white hover:border-whisky-400'
+                      ? 'border-gold-400 bg-gold-900/20 text-gold-300'
+                      : 'border-dark-600 bg-dark-700 text-cream-200 hover:border-amber-700'
                   }`}
                 >
                   <span className="text-lg font-medium">
@@ -576,8 +585,8 @@ export const QuizShell: FC = () => {
                   onClick={() => setSingleSelect('productType', type)}
                   className={`p-6 rounded-lg border-2 transition-all ${
                     answers.productType === type
-                      ? 'border-whisky-600 bg-whisky-50'
-                      : 'border-gray-300 bg-white hover:border-whisky-400'
+                      ? 'border-gold-400 bg-gold-900/20 text-gold-300'
+                      : 'border-dark-600 bg-dark-700 text-cream-200 hover:border-amber-700'
                   }`}
                 >
                   <span className="text-lg font-medium">
@@ -604,8 +613,8 @@ export const QuizShell: FC = () => {
                   onClick={() => setSingleSelect('finishType', finish)}
                   className={`p-6 rounded-lg border-2 transition-all ${
                     answers.finishType === finish
-                      ? 'border-whisky-600 bg-whisky-50'
-                      : 'border-gray-300 bg-white hover:border-whisky-400'
+                      ? 'border-gold-400 bg-gold-900/20 text-gold-300'
+                      : 'border-dark-600 bg-dark-700 text-cream-200 hover:border-amber-700'
                   }`}
                 >
                   <span className="text-lg font-medium">
@@ -636,8 +645,8 @@ export const QuizShell: FC = () => {
                   onClick={() => toggleMultiSelect('regions', region)}
                   className={`p-4 rounded-lg border-2 transition-all ${
                     answers.regions.includes(region)
-                      ? 'border-whisky-600 bg-whisky-50'
-                      : 'border-gray-300 bg-white hover:border-whisky-400'
+                      ? 'border-gold-400 bg-gold-900/20 text-gold-300'
+                      : 'border-dark-600 bg-dark-700 text-cream-200 hover:border-amber-700'
                   }`}
                 >
                   <span className="text-sm font-medium">
@@ -664,8 +673,8 @@ export const QuizShell: FC = () => {
                   onClick={() => setSingleSelect('peatLevel', level)}
                   className={`p-6 rounded-lg border-2 transition-all ${
                     answers.peatLevel === level
-                      ? 'border-whisky-600 bg-whisky-50'
-                      : 'border-gray-300 bg-white hover:border-whisky-400'
+                      ? 'border-gold-400 bg-gold-900/20 text-gold-300'
+                      : 'border-dark-600 bg-dark-700 text-cream-200 hover:border-amber-700'
                   }`}
                 >
                   <span className="text-lg font-medium">
@@ -695,8 +704,8 @@ export const QuizShell: FC = () => {
                   onClick={() => setSingleSelect('whiskyAge', age)}
                   className={`p-6 rounded-lg border-2 transition-all ${
                     answers.whiskyAge === age
-                      ? 'border-whisky-600 bg-whisky-50'
-                      : 'border-gray-300 bg-white hover:border-whisky-400'
+                      ? 'border-gold-400 bg-gold-900/20 text-gold-300'
+                      : 'border-dark-600 bg-dark-700 text-cream-200 hover:border-amber-700'
                   }`}
                 >
                   <span className="text-lg font-medium">
@@ -724,8 +733,8 @@ export const QuizShell: FC = () => {
                 onClick={() => updateAnswers({ limitedEditions: true })}
                 className={`p-8 rounded-lg border-2 transition-all ${
                   answers.limitedEditions === true
-                    ? 'border-whisky-600 bg-whisky-50'
-                    : 'border-gray-300 bg-white hover:border-whisky-400'
+                    ? 'border-gold-400 bg-gold-900/20 text-gold-300'
+                    : 'border-dark-600 bg-dark-700 text-cream-200 hover:border-amber-700'
                 }`}
               >
                 <span className="text-lg font-medium">Oui</span>
@@ -734,8 +743,8 @@ export const QuizShell: FC = () => {
                 onClick={() => updateAnswers({ limitedEditions: false })}
                 className={`p-8 rounded-lg border-2 transition-all ${
                   answers.limitedEditions === false
-                    ? 'border-whisky-600 bg-whisky-50'
-                    : 'border-gray-300 bg-white hover:border-whisky-400'
+                    ? 'border-gold-400 bg-gold-900/20 text-gold-300'
+                    : 'border-dark-600 bg-dark-700 text-cream-200 hover:border-amber-700'
                 }`}
               >
                 <span className="text-lg font-medium">Non</span>
@@ -759,8 +768,8 @@ export const QuizShell: FC = () => {
                   onClick={() => toggleMultiSelect('budget', band)}
                   className={`p-6 rounded-lg border-2 transition-all ${
                     answers.budget.includes(band)
-                      ? 'border-whisky-600 bg-whisky-50'
-                      : 'border-gray-300 bg-white hover:border-whisky-400'
+                      ? 'border-gold-400 bg-gold-900/20 text-gold-300'
+                      : 'border-dark-600 bg-dark-700 text-cream-200 hover:border-amber-700'
                   }`}
                 >
                   <span className="text-lg font-medium">
@@ -794,8 +803,8 @@ export const QuizShell: FC = () => {
                   onClick={() => setSingleSelect('abvComfort', abv)}
                   className={`p-6 rounded-lg border-2 transition-all ${
                     answers.abvComfort === abv
-                      ? 'border-whisky-600 bg-whisky-50'
-                      : 'border-gray-300 bg-white hover:border-whisky-400'
+                      ? 'border-gold-400 bg-gold-900/20 text-gold-300'
+                      : 'border-dark-600 bg-dark-700 text-cream-200 hover:border-amber-700'
                   }`}
                 >
                   <span className="text-lg font-medium">
@@ -814,6 +823,6 @@ export const QuizShell: FC = () => {
         )}
         </div>
       </div>
-    </PageTransition>
+    </div>
   );
 };
