@@ -50,6 +50,7 @@ describe('Matching Algorithm', () => {
   describe('calculateScore', () => {
     it('should calculate perfect match for exact preferences', () => {
       const answers: QuizAnswers = {
+        userLevel: 'INTERMEDIATE',
         styleTags: ['PEATY', 'SMOKY', 'SWEET'],
         intensity: 'BOLD',
         mouthfeel: ['OILY', 'HOT'],
@@ -70,6 +71,7 @@ describe('Matching Algorithm', () => {
 
     it('should handle no preferences with safe defaults', () => {
       const answers: QuizAnswers = {
+        userLevel: null,
         styleTags: [],
         intensity: null,
         mouthfeel: [],
@@ -89,6 +91,7 @@ describe('Matching Algorithm', () => {
 
     it('should penalize experimental whiskies for conservative users', () => {
       const answers: QuizAnswers = {
+        userLevel: 'INTERMEDIATE',
         styleTags: ['PEATY'],
         intensity: 'BOLD',
         mouthfeel: ['OILY'],
@@ -106,6 +109,7 @@ describe('Matching Algorithm', () => {
 
     it('should bonus experimental whiskies for adventurous users', () => {
       const answers: QuizAnswers = {
+        userLevel: 'INTERMEDIATE',
         styleTags: ['PEATY'],
         intensity: 'BOLD',
         mouthfeel: ['OILY'],
@@ -123,6 +127,7 @@ describe('Matching Algorithm', () => {
 
     it('should calculate style similarity correctly', () => {
       const answers: QuizAnswers = {
+        userLevel: null,
         styleTags: ['PEATY', 'SMOKY', 'SWEET', 'VANILLA'],
         intensity: null,
         mouthfeel: [],
@@ -140,6 +145,7 @@ describe('Matching Algorithm', () => {
 
     it('should handle adjacent intensity matching', () => {
       const answers: QuizAnswers = {
+        userLevel: null,
         styleTags: [],
         intensity: 'MEDIUM',
         mouthfeel: [],
@@ -157,6 +163,7 @@ describe('Matching Algorithm', () => {
 
     it('should handle ABV range matching', () => {
       const answers: QuizAnswers = {
+        userLevel: null,
         styleTags: [],
         intensity: null,
         mouthfeel: [],
@@ -174,6 +181,7 @@ describe('Matching Algorithm', () => {
 
     it('should handle region country matching', () => {
       const answers: QuizAnswers = {
+        userLevel: null,
         styleTags: [],
         intensity: null,
         mouthfeel: [],
@@ -191,6 +199,7 @@ describe('Matching Algorithm', () => {
 
     it('should normalize score to 0-100 range', () => {
       const answers: QuizAnswers = {
+        userLevel: 'INTERMEDIATE',
         styleTags: ['PEATY', 'SMOKY', 'SWEET', 'VANILLA', 'BOURBON_CASK', 'FULL_BODY'],
         intensity: 'BOLD',
         mouthfeel: ['OILY', 'HOT'],
@@ -211,6 +220,7 @@ describe('Matching Algorithm', () => {
   describe('matchWhiskies', () => {
     it('should return top 3 matches', () => {
       const answers: QuizAnswers = {
+        userLevel: 'INTERMEDIATE',
         styleTags: ['PEATY', 'SMOKY'],
         intensity: 'BOLD',
         mouthfeel: ['OILY'],
@@ -232,6 +242,7 @@ describe('Matching Algorithm', () => {
 
     it('should handle extreme preferences and still return 3 results', () => {
       const answers: QuizAnswers = {
+        userLevel: 'CONNOISSEUR',
         styleTags: ['PEATY', 'SMOKY', 'SWEET', 'VANILLA'],
         intensity: 'BOLD',
         mouthfeel: ['OILY', 'HOT'],
@@ -256,6 +267,7 @@ describe('Matching Algorithm', () => {
       const whisky3 = { ...mockWhisky, id: 'w3', abv: 45 };
 
       const answers: QuizAnswers = {
+        userLevel: 'INTERMEDIATE',
         styleTags: ['PEATY'],
         intensity: 'BOLD',
         mouthfeel: ['OILY'],
@@ -276,6 +288,7 @@ describe('Matching Algorithm', () => {
 
     it('should handle empty whisky list', () => {
       const answers: QuizAnswers = {
+        userLevel: 'INTERMEDIATE',
         styleTags: ['PEATY'],
         intensity: 'BOLD',
         mouthfeel: ['OILY'],
@@ -293,6 +306,7 @@ describe('Matching Algorithm', () => {
 
     it('should handle fewer than 3 whiskies', () => {
       const answers: QuizAnswers = {
+        userLevel: 'INTERMEDIATE',
         styleTags: ['PEATY'],
         intensity: 'BOLD',
         mouthfeel: ['OILY'],

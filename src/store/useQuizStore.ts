@@ -15,6 +15,7 @@ interface QuizState {
 }
 
 const initialAnswers: QuizAnswers = {
+  userLevel: null,
   styleTags: [],
   intensity: null,
   mouthfeel: [],
@@ -24,6 +25,16 @@ const initialAnswers: QuizAnswers = {
   budget: [],
   openness: null,
   abvComfort: null,
+  caskType: null,
+  peatLevel: null,
+  whiskyAge: null,
+  whiskyType: null,
+  productType: null,
+  finishType: null,
+  flavorProfile: null,
+  usage: null,
+  originPreference: null,
+  limitedEditions: null,
 };
 
 export const useQuizStore = create<QuizState>()(

@@ -84,7 +84,38 @@ export type Openness = z.infer<typeof OpennessSchema>;
 export const ABVComfortSchema = z.enum(['UNDER_43', '43_46', '46_50', 'OVER_50']);
 export type ABVComfort = z.infer<typeof ABVComfortSchema>;
 
+export const UserLevelSchema = z.enum(['BEGINNER', 'INTERMEDIATE', 'CONNOISSEUR']);
+export type UserLevel = z.infer<typeof UserLevelSchema>;
+
+export const CaskTypeSchema = z.enum(['EX_BOURBON', 'SHERRY', 'ATYPICAL_FINISH', 'INDIFFERENT']);
+export type CaskType = z.infer<typeof CaskTypeSchema>;
+
+export const PeatLevelSchema = z.enum(['NON_PEATED', 'LIGHTLY_PEATED', 'HEAVILY_PEATED', 'NO_PREFERENCE']);
+export type PeatLevel = z.infer<typeof PeatLevelSchema>;
+
+export const WhiskyAgeSchema = z.enum(['NO_PREFERENCE', '8_12', '12_18', 'OVER_18']);
+export type WhiskyAge = z.infer<typeof WhiskyAgeSchema>;
+
+export const WhiskyTypeSchema = z.enum(['SINGLE_MALT', 'BLEND', 'BOURBON', 'INDIFFERENT']);
+export type WhiskyType = z.infer<typeof WhiskyTypeSchema>;
+
+export const ProductTypeSchema = z.enum(['SINGLE_CASK', 'CASK_STRENGTH', 'SINGLE_MALT', 'BLEND', 'GRAIN_WHISKY', 'INDIFFERENT']);
+export type ProductType = z.infer<typeof ProductTypeSchema>;
+
+export const FinishTypeSchema = z.enum(['SHERRY', 'PORT', 'RUM', 'RED_WINE', 'NEW_OAK', 'INDIFFERENT']);
+export type FinishType = z.infer<typeof FinishTypeSchema>;
+
+export const FlavorProfileSchema = z.enum(['SWEET', 'FRUITY', 'SMOKY', 'INDIFFERENT']);
+export type FlavorProfile = z.infer<typeof FlavorProfileSchema>;
+
+export const UsageSchema = z.enum(['NEAT', 'COCKTAIL', 'BOTH']);
+export type Usage = z.infer<typeof UsageSchema>;
+
+export const OriginPreferenceSchema = z.enum(['AMERICAN', 'IRISH', 'SCOTTISH', 'INDIFFERENT']);
+export type OriginPreference = z.infer<typeof OriginPreferenceSchema>;
+
 export interface QuizAnswers {
+  userLevel: UserLevel | null;
   styleTags: StyleTag[];
   intensity: Intensity | null;
   mouthfeel: Mouthfeel[];
@@ -94,6 +125,16 @@ export interface QuizAnswers {
   budget: PriceBand[];
   openness: Openness | null;
   abvComfort: ABVComfort | null;
+  caskType?: CaskType | null;
+  peatLevel?: PeatLevel | null;
+  whiskyAge?: WhiskyAge | null;
+  whiskyType?: WhiskyType | null;
+  productType?: ProductType | null;
+  finishType?: FinishType | null;
+  flavorProfile?: FlavorProfile | null;
+  usage?: Usage | null;
+  originPreference?: OriginPreference | null;
+  limitedEditions?: boolean | null;
 }
 
 export interface ScoreBreakdown {

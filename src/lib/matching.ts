@@ -107,6 +107,36 @@ function calculateExperimentalBonus(answers: QuizAnswers, whisky: Whisky): numbe
   return 0;
 }
 
+function calculateFlavorProfileScore(answers: QuizAnswers, whisky: Whisky): number {
+  if (!answers.flavorProfile || answers.flavorProfile === 'INDIFFERENT') return 1;
+
+  if (answers.flavorProfile === 'SWEET' && whisky.style.includes('SWEET')) return 2;
+  if (answers.flavorProfile === 'FRUITY' && whisky.style.includes('FRUITY')) return 2;
+  if (answers.flavorProfile === 'SMOKY' && (whisky.style.includes('SMOKY') || whisky.style.includes('PEATY'))) return 2;
+
+  return 0;
+}
+
+function calculateOriginPreferenceScore(answers: QuizAnswers, whisky: Whisky): number {
+  if (!answers.originPreference || answers.originPreference === 'INDIFFERENT') return 1;
+
+  if (answers.originPreference === 'AMERICAN' && (whisky.region === 'USA_BOURBON' || whisky.region === 'USA_RYE')) return 2;
+  if (answers.originPreference === 'IRISH' && whisky.region === 'IRELAND') return 2;
+  if (answers.originPreference === 'SCOTTISH' && whisky.region.startsWith('SCOTLAND')) return 2;
+
+  return 0;
+}
+
+function calculateUsageScore(answers: QuizAnswers, whisky: Whisky): number {
+  if (!answers.usage) return 1;
+
+  if (answers.usage === 'NEAT' && whisky.abv >= 43) return 2;
+  if (answers.usage === 'COCKTAIL' && whisky.abv <= 46) return 2;
+  if (answers.usage === 'BOTH') return 1;
+
+  return 0;
+}
+
 function calculateStyleSimilarity(answers: QuizAnswers, whisky: Whisky): number {
   if (answers.styleTags.length === 0) return 0;
   const similarity = jaccardSimilarity(answers.styleTags, whisky.style);
@@ -126,7 +156,7 @@ export function calculateScore(answers: QuizAnswers, whisky: Whisky): WhiskyMatc
     styleSimilarity: calculateStyleSimilarity(answers, whisky),
   };
 
-  const rawScore =
+  let rawScore =
     breakdown.styleMatch +
     breakdown.intensityMatch +
     breakdown.mouthfeelMatch +
@@ -137,7 +167,7 @@ export function calculateScore(answers: QuizAnswers, whisky: Whisky): WhiskyMatc
     breakdown.experimentalBonus +
     breakdown.styleSimilarity;
 
-  const maxPossibleScore =
+  let maxPossibleScore =
     (answers.styleTags.length || 8) +
     3 +
     (answers.mouthfeel.length || 4) +
@@ -148,6 +178,51 @@ export function calculateScore(answers: QuizAnswers, whisky: Whisky): WhiskyMatc
     2 +
     2 +
     4;
+
+  if (answers.userLevel === 'BEGINNER') {
+    const flavorProfileScore = calculateFlavorProfileScore(answers, whisky);
+    const originPreferenceScore = calculateOriginPreferenceScore(answers, whisky);
+    const usageScore = calculateUsageScore(answers, whisky);
+
+    rawScore += flavorProfileScore + originPreferenceScore + usageScore;
+    maxPossibleScore += 6;
+  }
+
+  if (answers.userLevel === 'INTERMEDIATE' || answers.userLevel === 'CONNOISSEUR') {
+    if (answers.peatLevel && answers.peatLevel !== 'NO_PREFERENCE') {
+      const peatMatch = whisky.style.includes('PEATY') || whisky.style.includes('SMOKY');
+      if (answers.peatLevel === 'HEAVILY_PEATED' && peatMatch) rawScore += 3;
+      else if (answers.peatLevel === 'LIGHTLY_PEATED' && peatMatch) rawScore += 2;
+      else if (answers.peatLevel === 'NON_PEATED' && !peatMatch) rawScore += 3;
+      maxPossibleScore += 3;
+    }
+
+    if (answers.caskType && answers.caskType !== 'INDIFFERENT') {
+      if (answers.caskType === 'SHERRY' && whisky.style.includes('SHERRY')) rawScore += 2;
+      else if (answers.caskType === 'EX_BOURBON' && whisky.style.includes('BOURBON_CASK')) rawScore += 2;
+      maxPossibleScore += 2;
+    }
+
+    if (answers.whiskyType && answers.whiskyType !== 'INDIFFERENT') {
+      if (answers.whiskyType === 'BOURBON' && whisky.region.includes('USA')) rawScore += 2;
+      maxPossibleScore += 2;
+    }
+  }
+
+  if (answers.userLevel === 'CONNOISSEUR') {
+    if (answers.productType && answers.productType !== 'INDIFFERENT') {
+      if (answers.productType === 'CASK_STRENGTH' && whisky.style.includes('CASK_STRENGTH')) rawScore += 3;
+      else if (answers.productType === 'SINGLE_CASK' && whisky.experimental) rawScore += 2;
+      maxPossibleScore += 3;
+    }
+
+    if (answers.limitedEditions === true && whisky.experimental) {
+      rawScore += 3;
+      maxPossibleScore += 3;
+    } else if (answers.limitedEditions === false) {
+      maxPossibleScore += 1;
+    }
+  }
 
   const normalizedScore = (rawScore / maxPossibleScore) * 100;
 
