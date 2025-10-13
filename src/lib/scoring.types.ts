@@ -34,7 +34,10 @@ export const StyleTagSchema = z.enum([
   'BOURBON_CASK',
   'CASK_STRENGTH',
   'LIGHT_BODY',
+  'MEDIUM',
   'FULL_BODY',
+  'OAK',
+  'MARITIME',
 ]);
 export type StyleTag = z.infer<typeof StyleTagSchema>;
 

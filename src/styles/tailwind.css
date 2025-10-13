@@ -1,98 +1,145 @@
 @import "tailwindcss";
 
 @theme {
-  /* Dark Premium Base Colors */
-  --color-dark-950: #0a0a0a;
-  --color-dark-900: #121212;
-  --color-dark-850: #1a1a1a;
-  --color-dark-800: #1e1e1e;
-  --color-dark-700: #2a2a2a;
+  /* Whisky-inspired Color Palette */
+  /* Dark Backgrounds */
+  --color-dark-950: #0f0f0f;
+  --color-dark-900: #1a1a1a;
+  --color-dark-800: #2c2c2c;
+  --color-dark-700: #3d3d3d;
+  --color-dark-600: #4a4a4a;
 
-  /* Copper/Gold Accent Colors */
-  --color-copper-50: #fef6ee;
-  --color-copper-100: #fde8d5;
-  --color-copper-200: #fbcdaa;
-  --color-copper-300: #f8ab74;
-  --color-copper-400: #f4803c;
-  --color-copper-500: #d4622a;
-  --color-copper-600: #b54a1e;
-  --color-copper-700: #93391b;
-  --color-copper-800: #7a301c;
-  --color-copper-900: #642a19;
+  /* Amber/Whisky Colors */
+  --color-amber-50: #fff9f0;
+  --color-amber-100: #fef3e0;
+  --color-amber-200: #fde4c1;
+  --color-amber-300: #fbd19a;
+  --color-amber-400: #f9b76b;
+  --color-amber-500: #f59e42;
+  --color-amber-600: #d4822a;
+  --color-amber-700: #b36920;
+  --color-amber-800: #8b4513;
+  --color-amber-900: #6b3410;
 
-  /* Whisky Amber Colors */
-  --color-whisky-50: #fef9ec;
-  --color-whisky-100: #fbeec9;
-  --color-whisky-200: #f7da8e;
-  --color-whisky-300: #f3c053;
-  --color-whisky-400: #efa52b;
-  --color-whisky-500: #e9821c;
-  --color-whisky-600: #cd6016;
-  --color-whisky-700: #aa4315;
-  --color-whisky-800: #8a3419;
-  --color-whisky-900: #712c18;
+  /* Gold Accents */
+  --color-gold-50: #fffbeb;
+  --color-gold-100: #fef3c7;
+  --color-gold-200: #fde68a;
+  --color-gold-300: #fcd34d;
+  --color-gold-400: #d4af37;
+  --color-gold-500: #b8941f;
+  --color-gold-600: #9a7816;
+  --color-gold-700: #7c5e13;
+  --color-gold-800: #5e4710;
+  --color-gold-900: #4a380d;
 
-  /* Premium Glass Effect */
-  --color-glass-light: rgba(255, 255, 255, 0.05);
-  --color-glass-medium: rgba(255, 255, 255, 0.1);
-  --color-glass-dark: rgba(0, 0, 0, 0.4);
+  /* Caramel/Brown */
+  --color-caramel-50: #fdf8f3;
+  --color-caramel-100: #f9ede3;
+  --color-caramel-200: #f3dac3;
+  --color-caramel-300: #e8bc8e;
+  --color-caramel-400: #d89a5c;
+  --color-caramel-500: #c67a3b;
+  --color-caramel-600: #a0522d;
+  --color-caramel-700: #7d3f22;
+  --color-caramel-800: #5c2e19;
+  --color-caramel-900: #3f1f11;
+
+  /* Cream/Beige for text */
+  --color-cream-50: #fefdfb;
+  --color-cream-100: #fdfbf7;
+  --color-cream-200: #faf6ee;
+  --color-cream-300: #f5e6d3;
+  --color-cream-400: #e8d4bd;
+  --color-cream-500: #d4bea0;
+  --color-cream-600: #b8a187;
+  --color-cream-700: #9a856f;
+  --color-cream-800: #7a6956;
+  --color-cream-900: #5a4d3f;
 
   /* Typography */
+  --font-family-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-family-serif: 'Playfair Display', Georgia, serif;
-  --font-family-sans: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
-/* Custom Animations */
-@keyframes shimmer {
-  0% { background-position: -1000px 0; }
-  100% { background-position: 1000px 0; }
+/* Smooth transitions for all interactive elements */
+* {
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
 }
 
-@keyframes liquid-fill {
-  0% { height: 0%; }
-  100% { height: 100%; }
+/* Card styling */
+.card {
+  background-color: var(--color-dark-800);
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(212, 175, 55, 0.1);
 }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
+.card:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+  border-color: rgba(212, 175, 55, 0.2);
 }
 
-@keyframes glow {
-  0%, 100% { opacity: 0.5; }
-  50% { opacity: 1; }
+/* Button primary - Whisky gradient */
+.btn-primary {
+  background: linear-gradient(135deg, #d4af37 0%, #b8941f 100%);
+  color: var(--color-dark-950);
+  font-weight: 600;
+  padding: 0.75rem 2rem;
+  border-radius: 9999px;
+  box-shadow: 0 4px 6px -1px rgba(212, 175, 55, 0.4);
 }
 
-@keyframes ripple {
-  0% { transform: scale(0); opacity: 1; }
-  100% { transform: scale(4); opacity: 0; }
+.btn-primary:hover {
+  box-shadow: 0 10px 15px -3px rgba(212, 175, 55, 0.5);
+  transform: translateY(-1px);
 }
 
-/* Custom Utilities */
-.glass-effect {
-  background: var(--color-glass-medium);
-  backdrop-filter: blur(20px);
-  border: 1px solid var(--color-glass-light);
+.btn-primary:active {
+  transform: translateY(0);
 }
 
-.copper-gradient {
-  background: linear-gradient(135deg, var(--color-copper-600) 0%, var(--color-whisky-500) 100%);
+/* Button secondary */
+.btn-secondary {
+  background-color: transparent;
+  color: var(--color-amber-400);
+  font-weight: 500;
+  padding: 0.75rem 2rem;
+  border-radius: 9999px;
+  border: 2px solid var(--color-amber-700);
 }
 
-.shimmer-effect {
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    var(--color-glass-light) 50%,
-    transparent 100%
-  );
-  background-size: 2000px 100%;
-  animation: shimmer 3s infinite;
+.btn-secondary:hover {
+  background-color: var(--color-amber-900);
+  border-color: var(--color-amber-500);
 }
 
+/* Text gradient utility */
 .text-gradient {
-  background: linear-gradient(135deg, var(--color-copper-300) 0%, var(--color-whisky-400) 100%);
+  background: linear-gradient(135deg, #d4af37 0%, #f59e42 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+/* Subtle texture background */
+.textured-bg {
+  background-color: var(--color-dark-900);
+  background-image:
+    radial-gradient(at 20% 30%, rgba(139, 69, 19, 0.05) 0%, transparent 50%),
+    radial-gradient(at 80% 70%, rgba(212, 175, 55, 0.05) 0%, transparent 50%);
+}
+
+/* Tag/Badge styling */
+.tag {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  background-color: var(--color-amber-900);
+  color: var(--color-amber-200);
+  border: 1px solid var(--color-amber-700);
 }

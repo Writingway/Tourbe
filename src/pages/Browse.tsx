@@ -1,13 +1,16 @@
-import { FC, useState } from 'react';
+import { FC, useState, useMemo } from 'react';
 import whiskiesData from '../data/whiskies.json';
-import { WhiskyDataSchema, type Whisky, type Region, type PriceBand } from '../lib/scoring.types';
-import { Card } from '../components/UI/Card';
-import { Badge } from '../components/UI/Badge';
-import { Button } from '../components/UI/Button';
+import { WhiskyDataSchema, type Whisky, type Region, type PriceBand, type StyleTag } from '../lib/scoring.types';
+import { Navigation } from '../components/Navigation';
 
 export const Browse: FC = () => {
   const [selectedRegion, setSelectedRegion] = useState<Region | 'ALL'>('ALL');
   const [selectedPrice, setSelectedPrice] = useState<PriceBand | 'ALL'>('ALL');
+  const [selectedStyle, setSelectedStyle] = useState<StyleTag | 'ALL'>('ALL');
+  const [selectedDistillery, setSelectedDistillery] = useState<string>('ALL');
+  const [minAbv, setMinAbv] = useState<number>(0);
+  const [maxAbv, setMaxAbv] = useState<number>(100);
+  const [searchTerm, setSearchTerm] = useState<string>('');
 
   let whiskies: Whisky[] = [];
   let validationError: string | null = null;
@@ -19,11 +22,30 @@ export const Browse: FC = () => {
     console.error(error);
   }
 
-  const filteredWhiskies = whiskies.filter((w) => {
-    if (selectedRegion !== 'ALL' && w.region !== selectedRegion) return false;
-    if (selectedPrice !== 'ALL' && w.priceBand !== selectedPrice) return false;
-    return true;
-  });
+  // Extract unique distilleries
+  const distilleries = useMemo(() => {
+    const uniqueDistilleries = [...new Set(whiskies.map((w) => w.distillery))].sort();
+    return ['ALL', ...uniqueDistilleries];
+  }, [whiskies]);
+
+  // Extract unique style tags
+  const styleTags = useMemo(() => {
+    const allStyles = whiskies.flatMap((w) => w.style);
+    const uniqueStyles = [...new Set(allStyles)].sort();
+    return ['ALL', ...uniqueStyles] as (StyleTag | 'ALL')[];
+  }, [whiskies]);
+
+  const filteredWhiskies = useMemo(() => {
+    return whiskies.filter((w) => {
+      if (selectedRegion !== 'ALL' && w.region !== selectedRegion) return false;
+      if (selectedPrice !== 'ALL' && w.priceBand !== selectedPrice) return false;
+      if (selectedStyle !== 'ALL' && !w.style.includes(selectedStyle)) return false;
+      if (selectedDistillery !== 'ALL' && w.distillery !== selectedDistillery) return false;
+      if (w.abv < minAbv || w.abv > maxAbv) return false;
+      if (searchTerm && !w.name.toLowerCase().includes(searchTerm.toLowerCase())) return false;
+      return true;
+    });
+  }, [whiskies, selectedRegion, selectedPrice, selectedStyle, selectedDistillery, minAbv, maxAbv, searchTerm]);
 
   const regions: (Region | 'ALL')[] = [
     'ALL',
@@ -49,146 +71,272 @@ export const Browse: FC = () => {
 
   const formatPrice = (price: string) => {
     if (price === 'ALL') return 'Tous les prix';
-    if (price === 'UNDER_40') return 'Moins de 40€';
-    if (price === '40_70') return '40€-70€';
-    if (price === '70_120') return '70€-120€';
-    if (price === 'OVER_120') return 'Plus de 120€';
+    if (price === 'UNDER_40') return '< 40€';
+    if (price === '40_70') return '40-70€';
+    if (price === '70_120') return '70-120€';
+    if (price === 'OVER_120') return '> 120€';
     return price;
+  };
+
+  const formatStyle = (style: string) => {
+    if (style === 'ALL') return 'Tous les styles';
+    return style.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, (l) => l.toUpperCase());
+  };
+
+  const resetFilters = () => {
+    setSelectedRegion('ALL');
+    setSelectedPrice('ALL');
+    setSelectedStyle('ALL');
+    setSelectedDistillery('ALL');
+    setMinAbv(0);
+    setMaxAbv(100);
+    setSearchTerm('');
   };
 
   if (validationError) {
     return (
-      <div className="min-h-screen flex items-center justify-center px-4">
-        <Card variant="elevated" className="max-w-lg">
-          <h1 className="text-2xl font-bold text-red-600 mb-4">Error</h1>
-          <p className="text-gray-700">{validationError}</p>
-        </Card>
+      <div className="min-h-screen textured-bg flex items-center justify-center px-4">
+        <div className="card max-w-lg p-8">
+          <h1 className="text-2xl font-bold text-red-500 mb-4">Erreur</h1>
+          <p className="text-cream-300">{validationError}</p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen py-12 px-4">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen textured-bg">
+      <Navigation currentPath="/browse" />
+
+      <div className="max-w-7xl mx-auto px-4 py-12 mt-7">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">Parcourir les whiskies</h1>
-          <p className="text-gray-600">
-            Explorez notre collection de {whiskies.length} whiskies soigneusement sélectionnés du monde entier
+        <div className="mb-8 text-center">
+          <h1 className="text-4xl md:text-5xl font-serif font-bold text-gradient mb-4">
+            Parcourir la Collection
+          </h1>
+          <p className="text-cream-300 text-lg">
+            Explorez notre sélection de {whiskies.length} whiskies du monde entier
           </p>
         </div>
 
+        {/* Search Bar */}
+        <div className="mb-6">
+          <input
+            type="text"
+            placeholder="Rechercher un whisky par nom..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full px-6 py-3 bg-dark-800 border border-gold-400/20 rounded-full text-cream-100 placeholder-cream-600 focus:outline-none focus:border-gold-400/50 focus:ring-2 focus:ring-gold-400/30"
+          />
+        </div>
+
         {/* Filters */}
-        <div className="mb-8 flex flex-col sm:flex-row gap-4">
-          <div className="flex-1">
-            <label className="block text-sm font-medium text-gray-700 mb-2">Région</label>
-            <select
-              value={selectedRegion}
-              onChange={(e) => setSelectedRegion(e.target.value as Region | 'ALL')}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-whisky-500 focus:border-transparent"
-            >
-              {regions.map((region) => (
-                <option key={region} value={region}>
-                  {formatRegion(region)}
-                </option>
-              ))}
-            </select>
+        <div className="card p-6 mb-8">
+          <h2 className="text-xl font-serif font-bold text-gold-400 mb-4">Filtres</h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {/* Region Filter */}
+            <div>
+              <label className="block text-sm font-medium text-cream-300 mb-2">Région</label>
+              <select
+                value={selectedRegion}
+                onChange={(e) => setSelectedRegion(e.target.value as Region | 'ALL')}
+                className="w-full px-4 py-2 bg-dark-700 border border-gold-400/20 rounded-lg text-cream-100 focus:outline-none focus:border-gold-400/50 focus:ring-2 focus:ring-gold-400/30"
+              >
+                {regions.map((region) => (
+                  <option key={region} value={region}>
+                    {formatRegion(region)}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Distillery Filter */}
+            <div>
+              <label className="block text-sm font-medium text-cream-300 mb-2">Distillerie</label>
+              <select
+                value={selectedDistillery}
+                onChange={(e) => setSelectedDistillery(e.target.value)}
+                className="w-full px-4 py-2 bg-dark-700 border border-gold-400/20 rounded-lg text-cream-100 focus:outline-none focus:border-gold-400/50 focus:ring-2 focus:ring-gold-400/30"
+              >
+                {distilleries.map((distillery) => (
+                  <option key={distillery} value={distillery}>
+                    {distillery === 'ALL' ? 'Toutes les distilleries' : distillery}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Style Filter */}
+            <div>
+              <label className="block text-sm font-medium text-cream-300 mb-2">Style</label>
+              <select
+                value={selectedStyle}
+                onChange={(e) => setSelectedStyle(e.target.value as StyleTag | 'ALL')}
+                className="w-full px-4 py-2 bg-dark-700 border border-gold-400/20 rounded-lg text-cream-100 focus:outline-none focus:border-gold-400/50 focus:ring-2 focus:ring-gold-400/30"
+              >
+                {styleTags.map((style) => (
+                  <option key={style} value={style}>
+                    {formatStyle(style)}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Price Filter */}
+            <div>
+              <label className="block text-sm font-medium text-cream-300 mb-2">Gamme de prix</label>
+              <select
+                value={selectedPrice}
+                onChange={(e) => setSelectedPrice(e.target.value as PriceBand | 'ALL')}
+                className="w-full px-4 py-2 bg-dark-700 border border-gold-400/20 rounded-lg text-cream-100 focus:outline-none focus:border-gold-400/50 focus:ring-2 focus:ring-gold-400/30"
+              >
+                {prices.map((price) => (
+                  <option key={price} value={price}>
+                    {formatPrice(price)}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* ABV Range */}
+            <div className="md:col-span-2">
+              <label className="block text-sm font-medium text-cream-300 mb-2">
+                Degré d'alcool (ABV): {minAbv}% - {maxAbv}%
+              </label>
+              <div className="flex gap-4 items-center">
+                <input
+                  type="range"
+                  min="35"
+                  max="70"
+                  value={minAbv}
+                  onChange={(e) => setMinAbv(Number(e.target.value))}
+                  className="flex-1 h-2 bg-dark-700 rounded-lg appearance-none cursor-pointer accent-gold-400"
+                />
+                <span className="text-cream-400 text-sm w-12">Min</span>
+                <input
+                  type="range"
+                  min="35"
+                  max="70"
+                  value={maxAbv}
+                  onChange={(e) => setMaxAbv(Number(e.target.value))}
+                  className="flex-1 h-2 bg-dark-700 rounded-lg appearance-none cursor-pointer accent-gold-400"
+                />
+                <span className="text-cream-400 text-sm w-12">Max</span>
+              </div>
+            </div>
           </div>
 
-          <div className="flex-1">
-            <label className="block text-sm font-medium text-gray-700 mb-2">Gamme de prix</label>
-            <select
-              value={selectedPrice}
-              onChange={(e) => setSelectedPrice(e.target.value as PriceBand | 'ALL')}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-whisky-500 focus:border-transparent"
+          {/* Reset Filters Button */}
+          <div className="mt-6 flex justify-end">
+            <button
+              onClick={resetFilters}
+              className="px-6 py-2 bg-dark-700 hover:bg-dark-600 border border-gold-400/30 rounded-full text-cream-200 text-sm font-medium transition-all"
             >
-              {prices.map((price) => (
-                <option key={price} value={price}>
-                  {formatPrice(price)}
-                </option>
-              ))}
-            </select>
+              Réinitialiser les filtres
+            </button>
           </div>
         </div>
 
         {/* Results count */}
-        <div className="mb-6">
-          <p className="text-sm text-gray-600">
-            Affichage de {filteredWhiskies.length} whiskies sur {whiskies.length}
+        <div className="mb-6 flex items-center justify-between">
+          <p className="text-cream-400">
+            <span className="text-gold-400 font-bold">{filteredWhiskies.length}</span> whiskies trouvés
           </p>
         </div>
 
         {/* Whiskies Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredWhiskies.map((whisky) => (
-            <Card key={whisky.id} className="hover:shadow-lg transition-shadow">
-              <div className="aspect-[3/4] bg-gradient-to-br from-amber-900/20 to-dark-700 rounded-lg mb-4 flex items-center justify-center overflow-hidden">
-                <img
-                  src={whisky.image}
-                  alt={whisky.name}
-                  className="w-full h-full object-contain p-4"
-                />
+            <div key={whisky.id} className="card p-6 hover:scale-[1.02] transition-transform cursor-pointer">
+              {/* Whisky Icon/Visual */}
+              <div className="mb-4 flex items-center justify-center">
+                <div className="w-16 h-20 border-3 border-gold-400/50 rounded-b-full relative overflow-hidden">
+                  <div
+                    className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-amber-600 to-amber-400"
+                    style={{ height: `${Math.min(whisky.abv, 100)}%` }}
+                  ></div>
+                </div>
               </div>
 
-              <h3 className="text-xl font-bold text-gray-900 mb-1">{whisky.name}</h3>
-              <p className="text-sm text-gray-600 mb-3">{whisky.distillery}</p>
+              {/* Whisky Info */}
+              <h3 className="text-xl font-serif font-bold text-cream-100 mb-1 text-center">
+                {whisky.name}
+              </h3>
+              <p className="text-sm text-gold-400 mb-3 text-center">{whisky.distillery}</p>
 
-              <div className="flex items-center gap-2 mb-3">
-                <Badge variant="default">{formatRegion(whisky.region)}</Badge>
-                <Badge variant="default">{whisky.abv}%</Badge>
-                <Badge variant="success">{formatPrice(whisky.priceBand)}</Badge>
+              {/* Badges */}
+              <div className="flex flex-wrap gap-2 justify-center mb-4">
+                <span className="px-3 py-1 bg-gold-400/10 border border-gold-400/30 rounded-full text-xs text-gold-400">
+                  {formatRegion(whisky.region)}
+                </span>
+                <span className="px-3 py-1 bg-amber-400/10 border border-amber-400/30 rounded-full text-xs text-amber-400">
+                  {whisky.abv}% ABV
+                </span>
+                <span className="px-3 py-1 bg-caramel-400/10 border border-caramel-400/30 rounded-full text-xs text-caramel-400">
+                  {formatPrice(whisky.priceBand)}
+                </span>
               </div>
 
-              <p className="text-sm text-gray-700 mb-4 line-clamp-2">
+              {/* Tasting Note */}
+              <p className="text-sm text-cream-400 mb-4 text-center line-clamp-2">
                 {whisky.tastingNoteShort}
               </p>
 
-              <div className="flex flex-wrap gap-1 mb-4">
-                {whisky.style.slice(0, 4).map((tag, idx) => (
+              {/* Style Tags */}
+              <div className="flex flex-wrap gap-2 justify-center mb-4">
+                {whisky.style.slice(0, 3).map((tag, idx) => (
                   <span
                     key={idx}
-                    className="text-xs px-2 py-1 bg-whisky-100 text-whisky-800 rounded"
+                    className="text-xs px-2 py-1 bg-dark-700 text-cream-400 rounded border border-gold-400/20"
                   >
-                    {tag.replace(/_/g, ' ')}
+                    {formatStyle(tag)}
                   </span>
                 ))}
+                {whisky.style.length > 3 && (
+                  <span className="text-xs px-2 py-1 bg-dark-700 text-cream-500 rounded border border-gold-400/20">
+                    +{whisky.style.length - 3}
+                  </span>
+                )}
               </div>
 
-              <Button
-                variant="outline"
-                size="sm"
-                className="w-full"
-                onClick={() =>
-                  (window.location.href = `/map?id=${whisky.id}`)
-                }
+              {/* View Button */}
+              <button
+                onClick={() => (window.location.href = `/map?id=${whisky.id}`)}
+                className="w-full py-2 bg-gold-400/10 hover:bg-gold-400/20 border border-gold-400/30 rounded-full text-gold-400 text-sm font-medium transition-all"
               >
                 Voir la distillerie
-              </Button>
-            </Card>
+              </button>
+            </div>
           ))}
         </div>
 
+        {/* Empty State */}
         {filteredWhiskies.length === 0 && (
           <div className="text-center py-12">
-            <p className="text-gray-600 text-lg mb-4">
-              Aucun whisky ne correspond à vos filtres
-            </p>
-            <Button
-              onClick={() => {
-                setSelectedRegion('ALL');
-                setSelectedPrice('ALL');
-              }}
-            >
-              Effacer les filtres
-            </Button>
+            <div className="card p-8 max-w-md mx-auto">
+              <div className="text-6xl mb-4">🥃</div>
+              <h3 className="text-xl font-serif font-bold text-cream-100 mb-2">
+                Aucun whisky trouvé
+              </h3>
+              <p className="text-cream-400 mb-6">
+                Aucun whisky ne correspond à vos critères de recherche
+              </p>
+              <button onClick={resetFilters} className="btn-primary">
+                Réinitialiser les filtres
+              </button>
+            </div>
           </div>
         )}
 
         {/* Back to Home */}
         <div className="mt-12 text-center">
-          <Button variant="secondary" onClick={() => (window.location.href = '/')}>
+          <button
+            onClick={() => (window.location.href = '/')}
+            className="btn-secondary"
+          >
             Retour à l'accueil
-          </Button>
+          </button>
         </div>
       </div>
     </div>

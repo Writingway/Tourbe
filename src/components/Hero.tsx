@@ -21,15 +21,8 @@ export const Hero: FC = () => {
         {/* Hero Content */}
         <div className="relative min-h-screen flex items-center justify-center px-4 py-12">
           <div className="max-w-5xl w-full text-center">
-            {/* Decorative whisky glass icon */}
-            <div className="flex justify-center mb-8">
-              <div className="w-20 h-24 border-4 border-gold-400 rounded-b-full relative overflow-hidden">
-                <div className="absolute bottom-0 left-0 right-0 h-3/4 bg-gradient-to-t from-amber-600 to-amber-400"></div>
-              </div>
-            </div>
-
             {/* Title */}
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-serif font-bold mb-6 leading-tight">
+            <h1 className="text-3xl md:text-3xl lg:text-5xl font-serif font-bold mb-6 leading-tight">
               <span className="text-gradient">Fini les hésitations</span>
               <br />
               <span className="text-cream-100">découvrez le whisky</span>
@@ -69,7 +62,7 @@ export const Hero: FC = () => {
             {/* Features Grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16 max-w-4xl mx-auto">
               {[
-                { title: '101 Whiskies', desc: 'Sélection premium' },
+                { title: '500 Whiskies', desc: 'Sélection premium' },
                 { title: 'Algorithme intelligent', desc: 'Recommandations précises' },
                 { title: 'Rapide', desc: 'Résultats en 2 minutes' },
               ].map((feature, idx) => (
