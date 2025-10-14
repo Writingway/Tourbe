@@ -13,7 +13,7 @@ DROP TRIGGER IF EXISTS update_profiles_updated_at ON profiles;
 -- Supprimer les fonctions
 DROP FUNCTION IF EXISTS handle_new_user() CASCADE;
 DROP FUNCTION IF EXISTS update_updated_at_column() CASCADE;
-DROP FUNCTION IF EXISTS promote_to_admin(TEXT) CASCADE;
+DROP FUNCTION IF EXISTS promote_to_admin(TEXT) CASCADE;0
 
 -- Supprimer les tables (CASCADE supprime aussi les policies)
 DROP TABLE IF EXISTS analytics_events CASCADE;

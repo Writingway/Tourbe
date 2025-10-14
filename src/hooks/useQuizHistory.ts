@@ -59,7 +59,7 @@ export function useQuizHistory() {
         recommendations: recommendations as any,
         user_level: userLevel,
         completion_time: completionTime || null,
-      })
+      } as any)
       .select()
       .single();
 

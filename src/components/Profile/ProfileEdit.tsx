@@ -38,8 +38,8 @@ export const ProfileEdit: FC<ProfileEditProps> = ({ profile, onCancel, onSuccess
     try {
       await updateProfile(data);
       onSuccess();
-    } catch (err: any) {
-      setError(err.message || 'Erreur lors de la mise à jour du profil');
+    } catch (err) {
+      setError((err as Error).message || 'Erreur lors de la mise à jour du profil');
     }
   };
 

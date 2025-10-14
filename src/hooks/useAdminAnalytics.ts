@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
-import type { QuizResult, Profile } from '../lib/database.types';
 
 export interface AdminStats {
   totalUsers: number;
@@ -67,7 +66,7 @@ export function useAdminAnalytics() {
     // Charger les utilisateurs
     const { data: users, error: usersError } = await supabase
       .from('profiles')
-      .select('created_at');
+      .select('created_at') as any;
 
     if (usersError) throw usersError;
 
@@ -77,24 +76,24 @@ export function useAdminAnalytics() {
     const monthAgo = new Date(today.getTime() - 30 * 24 * 60 * 60 * 1000);
 
     const newUsersToday = users.filter(
-      (u) => new Date(u.created_at) >= today
+      (u: any) => new Date(u.created_at) >= today
     ).length;
     const newUsersWeek = users.filter(
-      (u) => new Date(u.created_at) >= weekAgo
+      (u: any) => new Date(u.created_at) >= weekAgo
     ).length;
     const newUsersMonth = users.filter(
-      (u) => new Date(u.created_at) >= monthAgo
+      (u: any) => new Date(u.created_at) >= monthAgo
     ).length;
 
     // Charger les quiz
     const { data: quizzes, error: quizzesError } = await supabase
       .from('quiz_results')
-      .select('completion_time');
+      .select('completion_time') as any;
 
     if (quizzesError) throw quizzesError;
 
-    const completedQuizzes = quizzes.filter((q) => q.completion_time !== null).length;
-    const totalTime = quizzes.reduce((sum, q) => sum + (q.completion_time || 0), 0);
+    const completedQuizzes = quizzes.filter((q: any) => q.completion_time !== null).length;
+    const totalTime = quizzes.reduce((sum: any, q: any) => sum + (q.completion_time || 0), 0);
     const avgCompletionTime = completedQuizzes > 0 ? totalTime / completedQuizzes : 0;
     const completionRate = quizzes.length > 0 ? (completedQuizzes / quizzes.length) * 100 : 0;
 
@@ -113,7 +112,7 @@ export function useAdminAnalytics() {
   const loadLevelDistribution = async () => {
     const { data, error } = await supabase
       .from('quiz_results')
-      .select('user_level');
+      .select('user_level') as any;
 
     if (error) throw error;
 
@@ -123,7 +122,7 @@ export function useAdminAnalytics() {
       CONNOISSEUR: 0,
     };
 
-    data.forEach((result) => {
+    data.forEach((result: any) => {
       if (result.user_level) {
         distribution[result.user_level as keyof LevelDistribution]++;
       }
@@ -135,19 +134,20 @@ export function useAdminAnalytics() {
   const loadTopRecommendations = async () => {
     const { data, error } = await supabase
       .from('quiz_results')
-      .select('recommendations');
+      .select('recommendations') as any;
 
     if (error) throw error;
 
     // Compter les occurrences de chaque whisky
     const whiskyCount: Record<string, { name: string; count: number }> = {};
 
-    data.forEach((result) => {
-      const recommendations = result.recommendations as any;
+    data.forEach((result: any) => {
+      const recommendations = result.recommendations as unknown;
       if (Array.isArray(recommendations)) {
-        recommendations.forEach((rec: any) => {
-          const whiskyId = rec.whisky?.id;
-          const whiskyName = rec.whisky?.name;
+        recommendations.forEach((rec: unknown) => {
+          const recObj = rec as { whisky?: { id?: string; name?: string } };
+          const whiskyId = recObj.whisky?.id;
+          const whiskyName = recObj.whisky?.name;
           if (whiskyId && whiskyName) {
             if (!whiskyCount[whiskyId]) {
               whiskyCount[whiskyId] = { name: whiskyName, count: 0 };
@@ -180,12 +180,12 @@ export function useAdminAnalytics() {
     const { data: users } = await supabase
       .from('profiles')
       .select('created_at')
-      .order('created_at', { ascending: true });
+      .order('created_at', { ascending: true }) as any;
 
     const { data: quizzes } = await supabase
       .from('quiz_results')
       .select('created_at')
-      .order('created_at', { ascending: true });
+      .order('created_at', { ascending: true }) as any;
 
     if (!users || !quizzes) return;
 
@@ -198,12 +198,12 @@ export function useAdminAnalytics() {
       const dateStr = date.toISOString().split('T')[0];
       const nextDate = new Date(date.getTime() + 24 * 60 * 60 * 1000);
 
-      const usersCount = users.filter((u) => {
+      const usersCount = users.filter((u: any) => {
         const createdAt = new Date(u.created_at);
         return createdAt >= date && createdAt < nextDate;
       }).length;
 
-      const quizzesCount = quizzes.filter((q) => {
+      const quizzesCount = quizzes.filter((q: any) => {
         const createdAt = new Date(q.created_at);
         return createdAt >= date && createdAt < nextDate;
       }).length;

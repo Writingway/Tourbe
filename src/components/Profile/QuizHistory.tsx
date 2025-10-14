@@ -121,7 +121,7 @@ const QuizResultCard: FC<QuizResultCardProps> = ({ result }) => {
             </div>
             <div className="flex-shrink-0">
               <span className="px-3 py-1 bg-gold-400/10 border border-gold-400/30 rounded-full text-xs text-gold-400 font-medium">
-                {match.totalScore}%
+                {Math.round(match.score)}%
               </span>
             </div>
           </div>

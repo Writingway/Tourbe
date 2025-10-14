@@ -91,6 +91,62 @@ export interface Database {
           created_at?: string;
         };
       };
+      whiskies: {
+        Row: {
+          id: string;
+          name: string;
+          region: string;
+          distillery: string;
+          abv: number;
+          price_band: string;
+          style: string[];
+          intensity: string;
+          mouthfeel: string[];
+          finish: Json;
+          experimental: boolean;
+          tasting_note_short: string;
+          image: string;
+          distillery_location: Json;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id: string;
+          name: string;
+          region: string;
+          distillery: string;
+          abv: number;
+          price_band: string;
+          style: string[];
+          intensity: string;
+          mouthfeel: string[];
+          finish: Json;
+          experimental?: boolean;
+          tasting_note_short: string;
+          image: string;
+          distillery_location: Json;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          name?: string;
+          region?: string;
+          distillery?: string;
+          abv?: number;
+          price_band?: string;
+          style?: string[];
+          intensity?: string;
+          mouthfeel?: string[];
+          finish?: Json;
+          experimental?: boolean;
+          tasting_note_short?: string;
+          image?: string;
+          distillery_location?: Json;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
     };
   };
 }
@@ -105,6 +161,10 @@ export type QuizResultInsert = Database['public']['Tables']['quiz_results']['Ins
 
 export type AnalyticsEvent = Database['public']['Tables']['analytics_events']['Row'];
 export type AnalyticsEventInsert = Database['public']['Tables']['analytics_events']['Insert'];
+
+export type WhiskyDB = Database['public']['Tables']['whiskies']['Row'];
+export type WhiskyDBInsert = Database['public']['Tables']['whiskies']['Insert'];
+export type WhiskyDBUpdate = Database['public']['Tables']['whiskies']['Update'];
 
 export type UserRole = 'user' | 'admin';
 export type UserLevel = 'BEGINNER' | 'INTERMEDIATE' | 'CONNOISSEUR';

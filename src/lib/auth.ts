@@ -40,7 +40,7 @@ export async function signUp({ email, password, fullName }: SignUpData) {
 
     const { error: profileError } = await supabase
       .from('profiles')
-      .insert(profileData);
+      .insert(profileData as any);
 
     if (profileError) {
       console.error('Error creating profile:', profileError);
@@ -105,12 +105,15 @@ export async function getProfile(userId: string) {
  * Mettre à jour le profil utilisateur
  */
 export async function updateProfile(userId: string, updates: ProfileUpdate) {
+  const updateData = {
+    ...updates,
+    updated_at: new Date().toISOString(),
+  };
+
   const { data, error } = await supabase
     .from('profiles')
-    .update({
-      ...updates,
-      updated_at: new Date().toISOString(),
-    })
+    // @ts-expect-error - Supabase type inference issue
+    .update(updateData)
     .eq('id', userId)
     .select()
     .single();
@@ -148,6 +151,6 @@ export async function getSession() {
  * Vérifier si l'utilisateur est admin
  */
 export async function isAdmin(userId: string): Promise<boolean> {
-  const profile = await getProfile(userId);
+  const profile = await getProfile(userId) as any;
   return profile.role === 'admin';
 }

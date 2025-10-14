@@ -12,8 +12,8 @@ export const GoogleAuthButton: FC = () => {
 
     try {
       await signInWithGoogle();
-    } catch (err: any) {
-      setError(err.message || 'Erreur lors de la connexion avec Google');
+    } catch (err) {
+      setError((err as Error).message || 'Erreur lors de la connexion avec Google');
     } finally {
       setIsLoading(false);
     }

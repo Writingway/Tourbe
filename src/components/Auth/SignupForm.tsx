@@ -53,8 +53,8 @@ export const SignupForm: FC<SignupFormProps> = ({ onSuccess, onSwitchToLogin }) 
       setTimeout(() => {
         onSuccess?.();
       }, 2000);
-    } catch (err: any) {
-      setError(err.message || 'Erreur lors de l\'inscription');
+    } catch (err) {
+      setError((err as Error).message || 'Erreur lors de l\'inscription');
     } finally {
       setIsLoading(false);
     }

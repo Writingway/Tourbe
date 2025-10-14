@@ -1,9 +1,11 @@
 import { FC, useState, useMemo } from 'react';
-import whiskiesData from '../data/whiskies.json';
-import { WhiskyDataSchema, type Whisky, type Region, type PriceBand, type StyleTag } from '../lib/scoring.types';
+import { useWhiskiesContext } from '../contexts/WhiskiesContext';
+import { type Region, type PriceBand, type StyleTag } from '../lib/scoring.types';
 import { Navigation } from '../components/Navigation';
 
 export const Browse: FC = () => {
+  const { whiskies, isLoading, error } = useWhiskiesContext();
+
   const [selectedRegion, setSelectedRegion] = useState<Region | 'ALL'>('ALL');
   const [selectedPrice, setSelectedPrice] = useState<PriceBand | 'ALL'>('ALL');
   const [selectedStyle, setSelectedStyle] = useState<StyleTag | 'ALL'>('ALL');
@@ -11,16 +13,6 @@ export const Browse: FC = () => {
   const [minAbv, setMinAbv] = useState<number>(0);
   const [maxAbv, setMaxAbv] = useState<number>(100);
   const [searchTerm, setSearchTerm] = useState<string>('');
-
-  let whiskies: Whisky[] = [];
-  let validationError: string | null = null;
-
-  try {
-    whiskies = WhiskyDataSchema.parse(whiskiesData);
-  } catch (error) {
-    validationError = 'Failed to load whiskies data';
-    console.error(error);
-  }
 
   // Extract unique distilleries
   const distilleries = useMemo(() => {
@@ -93,12 +85,30 @@ export const Browse: FC = () => {
     setSearchTerm('');
   };
 
-  if (validationError) {
+  // Show loading state
+  if (isLoading) {
+    return (
+      <div className="min-h-screen textured-bg">
+        <Navigation currentPath="/browse" />
+        <div className="flex items-center justify-center py-24">
+          <div className="card p-8">
+            <div className="flex items-center gap-4">
+              <div className="w-8 h-8 border-4 border-gold-400 border-t-transparent rounded-full animate-spin"></div>
+              <p className="text-cream-300">Chargement des whiskies...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Show error state
+  if (error) {
     return (
       <div className="min-h-screen textured-bg flex items-center justify-center px-4">
         <div className="card max-w-lg p-8">
           <h1 className="text-2xl font-bold text-red-500 mb-4">Erreur</h1>
-          <p className="text-cream-300">{validationError}</p>
+          <p className="text-cream-300">{error.message}</p>
         </div>
       </div>
     );

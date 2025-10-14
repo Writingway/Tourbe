@@ -3,13 +3,12 @@ import { useQuizStore } from '../../store/useQuizStore';
 import { Navigation } from '../Navigation';
 import { QuizQuestion as Question } from './QuizQuestion';
 import { matchWhiskies } from '../../lib/matching';
-import whiskiesData from '../../data/whiskies.json';
+import { useWhiskiesContext } from '../../contexts/WhiskiesContext';
 import type {
   Region,
   PriceBand,
   Openness,
   ABVComfort,
-  Whisky,
   UserLevel,
   CaskType,
   PeatLevel,
@@ -99,13 +98,14 @@ const formatLabel = (value: string): string => {
 export const QuizShell: FC = () => {
   const { currentStep, answers, updateAnswers, nextStep, prevStep, setResults } =
     useQuizStore();
+  const { whiskies, isLoading } = useWhiskiesContext();
 
   const totalSteps = getTotalSteps(answers.userLevel);
   const isLastStep = currentStep === totalSteps - 1;
 
   const handleNext = () => {
     if (isLastStep) {
-      const matches = matchWhiskies(answers, whiskiesData as Whisky[]);
+      const matches = matchWhiskies(answers, whiskies);
       setResults(matches);
       window.location.href = '/results';
     } else {
@@ -136,6 +136,23 @@ export const QuizShell: FC = () => {
   ) => {
     updateAnswers({ [key]: value });
   };
+
+  // Show loading state while whiskies are being fetched
+  if (isLoading) {
+    return (
+      <div className="min-h-screen textured-bg">
+        <Navigation currentPath="/quiz" />
+        <div className="px-4 py-24 max-w-4xl mx-auto">
+          <div className="card p-8">
+            <div className="flex items-center gap-4">
+              <div className="w-8 h-8 border-4 border-gold-400 border-t-transparent rounded-full animate-spin"></div>
+              <p className="text-cream-300">Chargement des whiskies...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen textured-bg">

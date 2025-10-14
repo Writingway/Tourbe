@@ -40,8 +40,8 @@ export const LoginForm: FC<LoginFormProps> = ({ onSuccess, onSwitchToSignup }) =
     try {
       await signIn(data);
       onSuccess?.();
-    } catch (err: any) {
-      setError(err.message || 'Erreur lors de la connexion');
+    } catch (err) {
+      setError((err as Error).message || 'Erreur lors de la connexion');
     } finally {
       setIsLoading(false);
     }
