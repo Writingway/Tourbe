@@ -1,12 +1,21 @@
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useQuizStore } from '../store/useQuizStore';
 import { ResultCard } from '../components/Results/ResultCard';
 import { Navigation } from '../components/Navigation';
 import { logEvent } from '../lib/analytics';
+import { useAuth } from '../hooks/useAuth';
+import { useQuizHistory } from '../hooks/useQuizHistory';
+import { AuthModal } from '../components/Auth/AuthModal';
 
 export const Results: FC = () => {
   const results = useQuizStore((state) => state.results);
+  const answers = useQuizStore((state) => state.answers);
   const resetQuiz = useQuizStore((state) => state.resetQuiz);
+  const { isAuthenticated } = useAuth();
+  const { saveQuizResult } = useQuizHistory();
+  const [isSaving, setIsSaving] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
+  const [showAuthModal, setShowAuthModal] = useState(false);
 
   useEffect(() => {
     logEvent('quiz_completed', { resultsCount: results.length });
@@ -15,6 +24,30 @@ export const Results: FC = () => {
   const handleTryAgain = () => {
     resetQuiz();
     window.location.href = '/quiz';
+  };
+
+  const handleSaveResults = async () => {
+    if (!isAuthenticated) {
+      setShowAuthModal(true);
+      return;
+    }
+
+    setIsSaving(true);
+    try {
+      await saveQuizResult(
+        answers,
+        results,
+        answers.userLevel || 'BEGINNER',
+        undefined // completion time, could be tracked
+      );
+      setIsSaved(true);
+      setTimeout(() => setIsSaved(false), 3000);
+    } catch (error) {
+      console.error('Error saving quiz results:', error);
+      alert('Erreur lors de la sauvegarde des résultats');
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   if (results.length === 0) {
@@ -68,6 +101,37 @@ export const Results: FC = () => {
           ))}
         </div>
 
+        {/* Save Results Section */}
+        {isAuthenticated ? (
+          <div className="mb-8 text-center">
+            {isSaved ? (
+              <div className="card p-6 bg-green-500/10 border-green-500/30">
+                <p className="text-green-400 font-medium">✅ Résultats sauvegardés avec succès !</p>
+              </div>
+            ) : (
+              <button
+                onClick={handleSaveResults}
+                disabled={isSaving}
+                className="btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isSaving ? 'Sauvegarde...' : '💾 Sauvegarder mes résultats'}
+              </button>
+            )}
+          </div>
+        ) : (
+          <div className="mb-8 card p-6 text-center">
+            <p className="text-cream-300 mb-4">
+              Connectez-vous pour sauvegarder vos résultats et accéder à votre historique
+            </p>
+            <button
+              onClick={() => setShowAuthModal(true)}
+              className="btn-primary"
+            >
+              Se connecter / S'inscrire
+            </button>
+          </div>
+        )}
+
         {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           <button
@@ -84,6 +148,13 @@ export const Results: FC = () => {
           </button>
         </div>
       </div>
+
+      {/* Auth Modal */}
+      <AuthModal
+        isOpen={showAuthModal}
+        onClose={() => setShowAuthModal(false)}
+        defaultView="signup"
+      />
     </div>
   );
 };

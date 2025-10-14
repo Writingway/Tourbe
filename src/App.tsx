@@ -1,4 +1,4 @@
-import { FC, Component, ReactNode } from 'react';
+import { FC, Component, ReactNode, useEffect } from 'react';
 import { Home } from './pages/Home';
 import { Quiz } from './pages/Quiz';
 import { Results } from './pages/Results';
@@ -6,6 +6,9 @@ import { Map } from './pages/Map';
 import { QR } from './pages/QR';
 import { Insights } from './pages/Insights';
 import { Browse } from './pages/Browse';
+import { Profile } from './pages/Profile';
+import { AdminDashboard } from './pages/AdminDashboard';
+import { useAuthStore } from './store/useAuthStore';
 import whiskiesData from './data/whiskies.json';
 import { WhiskyDataSchema } from './lib/scoring.types';
 import { ZodError } from 'zod';
@@ -105,6 +108,26 @@ const validateWhiskiesData = () => {
 const Router: FC = () => {
   validateWhiskiesData();
 
+  const { initialize, isInitialized } = useAuthStore();
+
+  useEffect(() => {
+    initialize();
+  }, [initialize]);
+
+  // Show loading while initializing auth
+  if (!isInitialized) {
+    return (
+      <div className="min-h-screen textured-bg flex items-center justify-center">
+        <div className="card p-8">
+          <div className="flex items-center gap-4">
+            <div className="w-8 h-8 border-4 border-gold-400 border-t-transparent rounded-full animate-spin"></div>
+            <p className="text-cream-300">Initialisation...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   const path = window.location.pathname;
 
   switch (path) {
@@ -122,6 +145,10 @@ const Router: FC = () => {
       return <QR />;
     case '/insights':
       return <Insights />;
+    case '/profile':
+      return <Profile />;
+    case '/admin':
+      return <AdminDashboard />;
     default:
       return <Home />;
   }

@@ -48,15 +48,20 @@
     "vitest": "^3.2.4"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.2.2",
     "@react-three/drei": "^10.7.6",
     "@react-three/fiber": "^9.3.0",
+    "@supabase/supabase-js": "^2.75.0",
+    "date-fns": "^4.1.0",
     "framer-motion": "^12.23.22",
     "leaflet": "^1.9.4",
     "lottie-react": "^2.4.1",
     "qrcode.react": "^4.2.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "react-hook-form": "^7.65.0",
     "react-leaflet": "^5.0.0",
+    "recharts": "^3.2.1",
     "three": "^0.180.0",
     "zod": "^4.1.11",
     "zustand": "^5.0.8"
