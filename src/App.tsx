@@ -8,6 +8,7 @@ import { Insights } from './pages/Insights';
 import { Browse } from './pages/Browse';
 import { Profile } from './pages/Profile';
 import { AdminDashboard } from './pages/AdminDashboard';
+import { AuthCallback } from './pages/AuthCallback';
 import { useAuthStore } from './store/useAuthStore';
 import { WhiskiesProvider } from './contexts/WhiskiesContext';
 import './styles/tailwind.css';
@@ -102,6 +103,8 @@ const Router: FC = () => {
       return <Profile />;
     case '/admin':
       return <AdminDashboard />;
+    case '/auth/callback':
+      return <AuthCallback />;
     default:
       return <Home />;
   }

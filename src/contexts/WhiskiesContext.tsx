@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, FC, ReactNode } from 'react';
 import { useWhiskies } from '../hooks/useWhiskies';
 import type { Whisky } from '../lib/scoring.types';
