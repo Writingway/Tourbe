@@ -2,7 +2,6 @@ import { FC, useState, Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { LoginForm } from './LoginForm';
 import { SignupForm } from './SignupForm';
-import { GoogleAuthButton } from './GoogleAuthButton';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -51,25 +50,15 @@ export const AuthModal: FC<AuthModalProps> = ({
             >
               <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl card p-8 transition-all">
                 {view === 'login' ? (
-                  <>
-                    <LoginForm
-                      onSuccess={handleSuccess}
-                      onSwitchToSignup={() => setView('signup')}
-                    />
-                    <div className="mt-6">
-                      <GoogleAuthButton />
-                    </div>
-                  </>
+                  <LoginForm
+                    onSuccess={handleSuccess}
+                    onSwitchToSignup={() => setView('signup')}
+                  />
                 ) : (
-                  <>
-                    <SignupForm
-                      onSuccess={handleSuccess}
-                      onSwitchToLogin={() => setView('login')}
-                    />
-                    <div className="mt-6">
-                      <GoogleAuthButton />
-                    </div>
-                  </>
+                  <SignupForm
+                    onSuccess={handleSuccess}
+                    onSwitchToLogin={() => setView('login')}
+                  />
                 )}
 
                 <button
