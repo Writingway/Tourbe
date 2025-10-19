@@ -41,7 +41,11 @@ export const Results: FC = () => {
         undefined // completion time, could be tracked
       );
       setIsSaved(true);
-      setTimeout(() => setIsSaved(false), 3000);
+      // Remettre à zéro le quiz après sauvegarde réussie
+      setTimeout(() => {
+        resetQuiz();
+        setIsSaved(false);
+      }, 3000);
     } catch (error) {
       console.error('Error saving quiz results:', error);
       alert('Erreur lors de la sauvegarde des résultats');

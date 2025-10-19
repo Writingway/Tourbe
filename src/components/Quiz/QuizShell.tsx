@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import React, { FC } from 'react';
 import { useQuizStore } from '../../store/useQuizStore';
 import { Navigation } from '../Navigation';
 import { QuizQuestion as Question } from './QuizQuestion';
@@ -96,17 +96,45 @@ const formatLabel = (value: string): string => {
 };
 
 export const QuizShell: FC = () => {
-  const { currentStep, answers, updateAnswers, nextStep, prevStep, setResults } =
-    useQuizStore();
+  const { 
+    currentStep, 
+    answers, 
+    updateAnswers, 
+    nextStep, 
+    prevStep, 
+    setResults,
+    totalQuestions,
+    setTotalQuestions,
+    markQuizCompleted
+  } = useQuizStore();
   const { whiskies, isLoading } = useWhiskiesContext();
 
   const totalSteps = getTotalSteps(answers.userLevel);
   const isLastStep = currentStep === totalSteps - 1;
 
+  // Définir le nombre total de questions une seule fois quand le userLevel est sélectionné
+  React.useEffect(() => {
+    if (answers.userLevel && totalQuestions === 0) {
+      setTotalQuestions(totalSteps);
+    }
+  }, [answers.userLevel, totalSteps, totalQuestions, setTotalQuestions]);
+
+  // Détecter si l'utilisateur revient sur un quiz en cours
+  React.useEffect(() => {
+    if (answers.userLevel && currentStep > 0 && totalQuestions > 0) {
+      // L'utilisateur revient sur un quiz en cours
+      console.log(`Quiz en cours détecté: étape ${currentStep + 1}/${totalQuestions}`);
+    }
+  }, [answers.userLevel, currentStep, totalQuestions]);
+
+  // Calculer le pourcentage basé sur les questions réellement posées
+  const progressPercentage = totalQuestions > 0 ? Math.round(((currentStep + 1) / totalQuestions) * 100) : 0;
+
   const handleNext = () => {
     if (isLastStep) {
       const matches = matchWhiskies(answers, whiskies);
       setResults(matches);
+      markQuizCompleted(); // Marquer le quiz comme terminé
       window.location.href = '/results';
     } else {
       nextStep();
@@ -163,16 +191,16 @@ export const QuizShell: FC = () => {
         <div className="mb-8">
           <div className="flex justify-between items-center mb-2">
             <span className="text-cream-300 text-sm font-medium">
-              Question {currentStep + 1} sur {totalSteps}
+              Question {currentStep + 1} sur {totalQuestions || totalSteps}
             </span>
             <span className="text-gold-400 text-sm font-medium">
-              {Math.round(((currentStep + 1) / totalSteps) * 100)}%
+              {progressPercentage}%
             </span>
           </div>
           <div className="h-2 bg-dark-700 rounded-full overflow-hidden">
             <div
               className="h-full bg-gradient-to-r from-gold-400 to-amber-500 transition-all duration-500"
-              style={{ width: `${((currentStep + 1) / totalSteps) * 100}%` }}
+              style={{ width: `${progressPercentage}%` }}
             />
           </div>
         </div>

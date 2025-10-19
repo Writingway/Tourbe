@@ -6,9 +6,13 @@ interface QuizState {
   currentStep: number;
   answers: QuizAnswers;
   results: WhiskyMatch[];
+  totalQuestions: number;
+  isCompleted: boolean;
   setCurrentStep: (step: number) => void;
   updateAnswers: (partial: Partial<QuizAnswers>) => void;
   setResults: (results: WhiskyMatch[]) => void;
+  setTotalQuestions: (total: number) => void;
+  markQuizCompleted: () => void;
   resetQuiz: () => void;
   nextStep: () => void;
   prevStep: () => void;
@@ -43,6 +47,8 @@ export const useQuizStore = create<QuizState>()(
       currentStep: 0,
       answers: initialAnswers,
       results: [],
+      totalQuestions: 0,
+      isCompleted: false,
       setCurrentStep: (step) => set({ currentStep: step }),
       updateAnswers: (partial) =>
         set((state) => ({
@@ -52,7 +58,15 @@ export const useQuizStore = create<QuizState>()(
         console.log('Setting results:', results.length);
         set({ results });
       },
-      resetQuiz: () => set({ currentStep: 0, answers: initialAnswers, results: [] }),
+      setTotalQuestions: (total) => set({ totalQuestions: total }),
+      markQuizCompleted: () => set({ isCompleted: true }),
+      resetQuiz: () => set({ 
+        currentStep: 0, 
+        answers: initialAnswers, 
+        results: [], 
+        totalQuestions: 0,
+        isCompleted: false 
+      }),
       nextStep: () => set((state) => ({ currentStep: state.currentStep + 1 })),
       prevStep: () =>
         set((state) => ({ currentStep: Math.max(0, state.currentStep - 1) })),
